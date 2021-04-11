@@ -1,0 +1,4012 @@
+<!DOCTYPE html>
+<head>
+    <title>index</title>
+    <style>
+        body {
+            background: #dddddd;
+        }
+        #canvas {
+            margin: 5px;
+            padding: 5px;
+            background: #aaaaaa;
+            border: thin inset #aaaaaa;
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id='canvas' width='1455' height='710' style="position: absolute;top:0px;left:0px;">
+        canvas not supported
+    </canvas>
+    <script>
+        var cvs = document.getElementById('canvas');
+        var ctx = cvs.getContext('2d');
+        var canvas = document.getElementById('canvas');
+        var context = cvs.getContext('2d');
+
+        class Rect { // 사각형을 그리는 클래스
+            constructor(x = 0, y = 0, width = 0, height = 0, f_color = '', s_color = '', s_width = 0, opa = 1) {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.width = Number(width);
+                this.height = Number(height);
+                this.f_color = f_color;
+                this.s_color = s_color;
+                this.s_width = Number(s_width);
+                this.opa = Number(opa);
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    width,
+                    height,
+                    f_color,
+                    s_color,
+                    s_width,
+                    opa
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                ctx.globalAlpha = opa; // 투명도 설정
+                ctx.save();
+                ctx.fillStyle = f_color; // 평면 색상
+                ctx.lineWidth = s_width; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = s_color; // 선 색상
+                ctx.rect(x, y, width, height); // 사각형 정보
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Rounded_Rect { // 모서리가 둥근 사각형을 그리는 클래스
+            constructor(x = 0, y = 0, width = 0, height = 0, r = 0, f_color = '', s_color = '', s_width = 0, opa = 1) {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.width = Number(width);
+                this.height = Number(height);
+                this.r = Number(r);
+                this.f_color = f_color;
+                this.s_color = s_color;
+                this.s_width = Number(s_width);
+                this.opa = Number(opa);
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    width,
+                    height,
+                    r,
+                    f_color,
+                    s_color,
+                    s_width,
+                    opa
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                ctx.globalAlpha = opa; // 투명도 설정
+                ctx.save();
+                ctx.fillStyle = f_color; // 평면 색상
+                ctx.lineWidth = s_width; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = s_color; // 선 색상
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + width - r, y);
+                ctx.arc(x + width - r, y + r, r, (Math.PI / 180) * 270, (Math.PI / 180) * 0);
+                ctx.lineTo(x + width, y + height - r);
+                ctx.arc(x + width - r, y + height - r, r, (Math.PI / 180) * 0, (Math.PI / 180) * 90);
+                ctx.lineTo(x + r, y + height);
+                ctx.arc(x + r, y + height - r, r, (Math.PI / 180) * 90, (Math.PI / 180) * 180);
+                ctx.lineTo(x, y + r);
+                ctx.arc(x + r, y + r, r, (Math.PI / 180) * 180, (Math.PI / 180) * 270);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Kingdom_m { // 왕관 아이콘을 그리는 클래스
+            constructor(x = 0, y = 0, size = 0, color = '') {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.size = Number(size);
+                this.color = color;
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    size,
+                    color
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.scale(size, size);
+                //왕관 추가
+                ctx.fillStyle = '#fddb0a'; // 왕관 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = color; // 선 색상
+                ctx.moveTo(x + 42, y + 39);
+                ctx.lineTo(x + 80, y + 39);
+                ctx.arc(x + 80, y + 44, 5, (Math.PI / 180) * 270, (Math.PI / 180) * 90);
+                ctx.lineTo(x + 42, y + 49);
+                ctx.arc(x + 42, y + 44, 5, (Math.PI / 180) * 90, (Math.PI / 180) * 270);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(x + 42, y + 39);
+                ctx.lineTo(x + 36, y + 18);
+                ctx.bezierCurveTo(x + 45, y + 10, x + 45, y + 22, x + 45, y + 22);
+                ctx.lineTo(x + 48, y + 24);
+                ctx.lineTo(x + 54, y + 18);
+                ctx.bezierCurveTo(x + 52, y + 10, x + 53, y + 7, x + 61, y + 5);
+                ctx.bezierCurveTo(x + 68, y + 6, x + 72, y + 11, x + 68, y + 18);
+                ctx.lineTo(x + 68, y + 18);
+                ctx.lineTo(x + 74, y + 24);
+                ctx.lineTo(x + 77, y + 22);
+                ctx.bezierCurveTo(x + 72, y + 13, x + 86, y + 15, x + 86, y + 18);
+                ctx.lineTo(x + 86, y + 18);
+                ctx.lineTo(x + 80, y + 39);
+                ctx.lineTo(x + 42, y + 39);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Kingdom_pass { // 킹덤페스 아이콘을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#5b7da0'; // 평면 밝은 
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#231a09'; // 선 색상
+                ctx.moveTo(x + 25, y);
+                ctx.lineTo(x + 105, y);
+                ctx.lineTo(x + 105, y + 75);
+                ctx.lineTo(x + 25, y + 75);
+                ctx.lineTo(x, y + 37.5);
+                ctx.lineTo(x + 25, y);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#41628b'; // 평면 어두운 색상
+                ctx.lineWidth = 1; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#41628b'; // 선 색상
+                ctx.moveTo(x + 3, y + 37.5);
+                ctx.lineTo(x + 35, y + 72);
+                ctx.lineTo(x + 102, y + 2);
+                ctx.lineTo(x + 102, y + 72);
+                ctx.lineTo(x + 28, y + 72);
+                ctx.lineTo(x + 3, y + 37.5);
+                ctx.fill();
+                ctx.stroke();
+
+                //왕관 추가
+                ctx.fillStyle = '#fddb0a'; // 왕관 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#2f3e43'; // 선 색상
+                ctx.moveTo(x + 42, y + 39);
+                ctx.lineTo(x + 80, y + 39);
+                ctx.arc(x + 80, y + 44, 5, (Math.PI / 180) * 270, (Math.PI / 180) * 90);
+                ctx.lineTo(x + 42, y + 49);
+                ctx.arc(x + 42, y + 44, 5, (Math.PI / 180) * 90, (Math.PI / 180) * 270);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(x + 42, y + 39);
+                ctx.lineTo(x + 36, y + 18);
+                ctx.bezierCurveTo(x + 45, y + 10, x + 45, y + 22, x + 45, y + 22);
+                ctx.lineTo(x + 48, y + 24);
+                ctx.lineTo(x + 54, y + 18);
+                ctx.bezierCurveTo(x + 52, y + 10, x + 53, y + 7, x + 61, y + 5);
+                ctx.bezierCurveTo(x + 68, y + 6, x + 72, y + 11, x + 68, y + 18);
+                ctx.lineTo(x + 68, y + 18);
+                ctx.lineTo(x + 74, y + 24);
+                ctx.lineTo(x + 77, y + 22);
+                ctx.bezierCurveTo(x + 72, y + 13, x + 86, y + 15, x + 86, y + 18);
+                ctx.lineTo(x + 86, y + 18);
+                ctx.lineTo(x + 80, y + 39);
+                ctx.lineTo(x + 42, y + 39);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#63a8ed'; // 왕관 무늬
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#35598b'; // 선 색상
+                ctx.moveTo(x + 56, y + 25);
+                ctx.arc(x + 61, y + 25, 4, (Math.PI / 180) * 180, (Math.PI / 180) * 0);
+                ctx.arc(x + 66, y + 30, 4, (Math.PI / 180) * 270, (Math.PI / 180) * 90);
+                ctx.arc(x + 61, y + 35, 4, (Math.PI / 180) * 0, (Math.PI / 180) * 180);
+                ctx.arc(x + 56, y + 30, 4, (Math.PI / 180) * 90, (Math.PI / 180) * 270);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Circle { // 원을 그리는 클래스
+            constructor(x = 0, y = 0, r = 0, s_angle = 0, e_angle = 0, s_width = 0, f_color = '', s_color = '') {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.r = Number(r);
+                this.s_angle = Number(s_angle);
+                this.e_angle = Number(e_angle);
+                this.s_width = Number(s_width);
+                this.f_color = f_color;
+                this.s_color = s_color;
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    r,
+                    s_angle,
+                    e_angle,
+                    s_width,
+                    f_color,
+                    s_color
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.fillStyle = f_color; // 평면 색상
+                ctx.lineWidth = s_width; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = s_color; // 선 색상
+                ctx.arc(x, y, r, (Math.PI / 180) * s_angle, (Math.PI / 180) * e_angle);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Diamond { // 다이아몬드 아이콘을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#00c0ff'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0d2f54'; // 선 색상
+                ctx.moveTo(x, y); // 다이아몬드 선 그리기
+                ctx.lineTo(x + 25, y);
+                ctx.lineTo(x + 40, y + 18);
+                ctx.lineTo(x + 12.5, y + 46);
+                ctx.lineTo(x - 15, y + 18);
+                ctx.lineTo(x, y);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.strokeStyle = '#abf6fc'; // 
+                ctx.fillStyle = '#abf6fc';
+                ctx.beginPath();
+                ctx.moveTo(x + 12.5, y + 1);
+                ctx.bezierCurveTo(x + 12.5, y + 2, x + 5, y + 0, x + 1, y + 18);
+                ctx.lineTo(x - 11.5, y + 18);
+                ctx.lineTo(x + 1, y + 1);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.strokeStyle = '#0187ff'; // 음영 밝은 색
+                ctx.fillStyle = '#0187ff';
+                ctx.beginPath();
+                ctx.moveTo(x + 12.5, y + 2);
+                ctx.bezierCurveTo(x + 12.5, y + 2, x + 20, y + 0, x + 25, y + 18);
+                ctx.bezierCurveTo(x + 26, y + 10, x + 26, y + 10, x + 25, y + 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.strokeStyle = '#0187ff'; // 음영 중간 색
+                ctx.fillStyle = '#0187ff';
+                ctx.beginPath();
+                ctx.moveTo(x + 2, y + 20);
+                ctx.lineTo(x + 23, y + 20);
+                ctx.bezierCurveTo(x + 23, y + 20, x + 23, y + 20, x + 20, y + 28);
+                ctx.bezierCurveTo(x + 17, y + 30, x + 12, y + 35, x + 7, y + 32);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.strokeStyle = '#022b95'; // 음영 어두운 색
+                ctx.fillStyle = '#022b95';
+                ctx.beginPath();
+                ctx.moveTo(x + 23, y + 20);
+                ctx.lineTo(x + 32, y + 20);
+                ctx.bezierCurveTo(x + 30, y + 22, x + 26, y + 25, x + 20, y + 28);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.strokeStyle = '#abf6fc'; // 선 색상
+                ctx.beginPath(); //베지어 곡선 1
+                ctx.moveTo(x + 12.5, y + 2);
+                ctx.bezierCurveTo(x - 10, y + 15, x + 10, y + 30, x + 12.5, y + 43);
+                ctx.stroke();
+
+                ctx.strokeStyle = '#0187ff'; // 선 색상
+                ctx.beginPath(); //베지어 곡선 1
+                ctx.moveTo(x + 13.5, y + 2);
+                ctx.bezierCurveTo(x + 37, y + 15, x + 16, y + 30, x + 12.5, y + 43);
+                ctx.stroke();
+                ctx.restore();
+                const light = new Circle(x - 1, y + 10, 4.5, 0, 360, 0, '#ffffff', '#ffffff'); // 반사광(백색) 표현
+                light.draw();
+            }
+        }
+        class Texttext { // 텍스트를 그리는 클래스
+            constructor(text = '', x = 0, y = 0, size = 0, color = '', font = '', option = '') {
+                this.text = text;
+                this.x = Number(x);
+                this.y = Number(y);
+                this.size = Number(size);
+                this.color = color;
+                this.font = font;
+                this.option = option;
+            }
+            Write() {
+                const {
+                    text,
+                    x,
+                    y,
+                    size,
+                    color,
+                    font,
+                    option
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.globalAlpha=1;
+                ctx.font = option + ' ' + size + 'px ' + font;
+                ctx.fillStyle = color;
+                ctx.fillText(text, x, y);
+                ctx.restore();
+            }
+        }
+        class Image_put { // 이미지를 그리는 클래스
+            constructor(x = 0, y = 0, src = '', szx = 0, szy = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.src = src;
+                this.szx = Number(szx);
+                this.szy = Number(szy);
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    src,
+                    szx,
+                    szy
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                var image = new Image();
+                image.src = this.src;
+                image.onload = function () {
+                    ctx.drawImage(image, x + 1, y - 1, szx, szy);
+                }
+            }
+        }
+        class Alarm_icon { // 알림 아이콘을 그리는 클래스
+            constructor(x = 0, y = 0, text = '') {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.text = text;
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    text
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#fe0000'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#030000'; // 선 색상
+                ctx.moveTo(x + 7, y);
+                ctx.lineTo(x + 15, y);
+                ctx.arc(x + 15, y + 10, 10, (Math.PI / 180) * 270, (Math.PI / 180) * 70);
+                ctx.lineTo(x + 12, y + 25);
+                ctx.lineTo(x + 10, y + 25);
+                ctx.lineTo(x + 11, y + 20);
+                ctx.lineTo(x + 7, y + 20);
+                ctx.arc(x + 7, y + 10, 10, (Math.PI / 180) * 90, (Math.PI / 180) * 270);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.font = '18px Gothic bold';
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(text, x + 7, y + 15);
+                ctx.restore();
+            }
+        }
+        class Meat { // 고기 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#f1325b'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#520308'; // 선 색상
+                ctx.moveTo(x + 18, y + 13);
+                ctx.arc(x + 30, y + 15, 13, (Math.PI / 180) * 180, (Math.PI / 180) * 270);
+                ctx.bezierCurveTo(x + 50, y + 2, x + 50, y + 30, x + 38, y + 38);
+                ctx.bezierCurveTo(x + 38, y + 45, x, y + 55, x - 1, y + 30);
+                ctx.arc(x + 12, y + 30, 13, (Math.PI / 180) * 180, (Math.PI / 180) * 270);
+                ctx.lineTo(x + 18, y + 13);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f8f9e9'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#520308'; // 선 색상
+                ctx.moveTo(x + 10, y + 15);
+                ctx.lineTo(x + 12, y + 17);
+                ctx.lineTo(x + 8, y + 13);
+                ctx.arc(x + 5, y + 10, 5, (Math.PI / 180) * 70, (Math.PI / 180) * 290);
+                ctx.arc(x + 10, y + 5, 5, (Math.PI / 180) * 160, (Math.PI / 180) * 50);
+                ctx.lineTo(x + 17, y + 12);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f8f9e9'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#520308'; // 선 색상
+                ctx.moveTo(x + 38, y + 38);
+                ctx.arc(x + 42, y + 42, 5, (Math.PI / 180) * 190, (Math.PI / 180) * 90);
+                ctx.arc(x + 37, y + 47, 5, (Math.PI / 180) * 0, (Math.PI / 180) * 290);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Mycookie { // 내 쿠키 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#dd9145'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#22110a'; // 선 색상
+                ctx.arc(x - 24, y + 5, 18, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(x + 24, y + 5, 18, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(x, y, 28, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Friends { // 친구창 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#e79f57'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#231316'; // 선 색상
+
+                ctx.arc(x + 43, y + 22, 5, (Math.PI / 180) * 130, (Math.PI / 180) * 45);
+                ctx.bezierCurveTo(x + 50, y + 30, x + 50, y + 30, x + 50, y + 35);
+                ctx.lineTo(x + 20, y + 35);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(x + 33, y + 18, 7, (Math.PI / 180) * 130, (Math.PI / 180) * 45);
+                ctx.bezierCurveTo(x + 36, y + 22, x + 40, y + 20, x + 43, y + 36);
+                ctx.lineTo(x + 20, y + 36);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(x + 16, y + 10, 11, (Math.PI / 180) * 130, (Math.PI / 180) * 45);
+                ctx.bezierCurveTo(x + 30, y + 20, x + 30, y + 20, x + 32, y + 40);
+                ctx.lineTo(x, y + 40);
+                ctx.bezierCurveTo(x + 4, y + 20, x + 4, y + 20, x + 10, y + 18);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Mail { // 메일 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#fbefd7'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#231316'; // 선 색상
+
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + 48, y + 6);
+                ctx.lineTo(x + 44, y + 38);
+                ctx.lineTo(x - 4, y + 32);
+                ctx.lineTo(x, y);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(x + 2, y + 4);
+                ctx.lineTo(x + 22, y + 21);
+                ctx.lineTo(x + 45, y + 10);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(x - 1, y + 28);
+                ctx.lineTo(x + 18, y + 18);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(x + 43, y + 33);
+                ctx.lineTo(x + 26, y + 19);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Megaphone { // 메가폰 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#a16b2d'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#28170d'; // 선 색상
+
+                ctx.lineTo(x + 15, y + 20);
+                ctx.lineTo(x + 25, y + 39);
+                ctx.lineTo(x + 18, y + 42);
+                ctx.lineTo(x + 8, y + 25);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f1d065'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#2c1c0f'; // 선 색상
+                ctx.lineTo(x + 11, y + 34);
+                ctx.lineTo(x + 15, y + 32);
+                ctx.arc(x + 40, y + 26, 5, (Math.PI / 180) * 135, (Math.PI / 180) * 0, -1);
+                ctx.lineTo(x + 44, y + 25);
+                ctx.arc(x + 25, y, 5, (Math.PI / 180) * 345, (Math.PI / 180) * 165, -1);
+                ctx.lineTo(x + 20, y + 2);
+                ctx.lineTo(x + 7, y + 19);
+                ctx.lineTo(x + 3, y + 22);
+                ctx.lineTo(x - 5, y + 25);
+                ctx.lineTo(x + 4, y + 40);
+                ctx.lineTo(x + 11, y + 34);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#e18b50'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#7c4d19'; // 선 색상
+                ctx.lineTo(x + 11, y + 34);
+                ctx.lineTo(x + 15, y + 32);
+                ctx.lineTo(x + 7, y + 19);
+                ctx.lineTo(x + 3, y + 22);
+                ctx.lineTo(x + 11, y + 34);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Menu { // 메뉴 아이콘 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                ctx.globalAlpha=1;
+                const Blue_r_rect = new Rounded_Rect(x, y, 43, 43, 7, '#44678f', '#0c1824', 3, 1);
+                Blue_r_rect.draw();
+                const Blue_r_rect_1 = new Rounded_Rect(x + 10, y + 10, 24, 6, 2, '#ffffff', '#1b3d62', 3, 1);
+                const Blue_r_rect_2 = new Rounded_Rect(x + 10, y + 17, 24, 6, 2, '#ffffff', '#1b3d62', 3, 1);
+                const Blue_r_rect_3 = new Rounded_Rect(x + 10, y + 24, 24, 6, 2, '#ffffff', '#1b3d62', 3, 1);
+                Blue_r_rect_1.draw();
+                Blue_r_rect_2.draw();
+                Blue_r_rect_3.draw();
+                ctx.save();
+                ctx.fillStyle = '#44678f'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0c1824'; // 선 색상
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Balloon { // 곰젤리 열기구 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#f1325b'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#520308'; // 선 색상
+                ctx.lineTo(x + 16, y + 55);
+                ctx.lineTo(x + 15, y + 48);
+                ctx.bezierCurveTo(x - 7, y + 40, x, y + 20, x + 3, y + 17);
+                ctx.bezierCurveTo(x - 8, y + 10, x + 6, y - 6, x + 18, y + 3);
+                ctx.bezierCurveTo(x + 28, y, x + 38, y, x + 45, y + 3);
+                ctx.bezierCurveTo(x + 50, y - 3, x + 71, y, x + 58, y + 17);
+                ctx.bezierCurveTo(x + 60, y + 25, x + 65, y + 40, x + 45, y + 48);
+                ctx.lineTo(x + 43, y + 55);
+                ctx.lineTo(x + 16, y + 55);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f7b583'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#520308'; // 선 색상
+                ctx.lineTo(x + 18, y + 60);
+                ctx.lineTo(x + 41, y + 60);
+                ctx.lineTo(x + 38, y + 68);
+                ctx.lineTo(x + 21, y + 68);
+                ctx.lineTo(x + 18, y + 60);
+                ctx.fill();
+                ctx.stroke();
+
+
+                ctx.beginPath();
+                ctx.strokeStyle = '#fbe4ba'; // 선 색상
+                ctx.moveTo(x + 36, y + 53);
+                ctx.lineTo(x + 35, y + 60);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(x + 23, y + 53);
+                ctx.lineTo(x + 24, y + 60);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Gotcha { // 뽑기 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#824741'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0e0301'; // 선 색상
+                ctx.lineTo(x + 7, y + 55);
+                ctx.lineTo(x + 3, y + 45);
+                ctx.bezierCurveTo(x, y + 45, x + 0, y + 25, x + 5, y + 25);
+                ctx.bezierCurveTo(x + 0, y + 15, x + 20, y + 4, x + 20, y + 7);
+                ctx.bezierCurveTo(x + 30, y + 0, x + 40, y + 0, x + 50, y + 7);
+                ctx.bezierCurveTo(x + 60, y + 8, x + 65, y + 10, x + 65, y + 25);
+                ctx.bezierCurveTo(x + 70, y + 35, x + 70, y + 35, x + 67, y + 45);
+                ctx.lineTo(x + 63, y + 55);
+                ctx.lineTo(x + 7, y + 55);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#391612'; // 선 색상
+                ctx.moveTo(x + 35, y + 40);
+                ctx.lineTo(x + 5, y + 25);
+                ctx.lineTo(x + 35, y + 40);
+                ctx.lineTo(x + 20, y + 7);
+                ctx.lineTo(x + 35, y + 40);
+                ctx.lineTo(x + 50, y + 7);
+                ctx.lineTo(x + 35, y + 40);
+                ctx.lineTo(x + 65, y + 25);
+                ctx.moveTo(x + 35, y + 45);
+                ctx.lineTo(x + 35, y + 40);
+                ctx.moveTo(x + 35, y + 45);
+                ctx.lineTo(x + 3, y + 45);
+                ctx.lineTo(x + 67, y + 45);
+                ctx.lineTo(x + 35, y + 45);
+                ctx.lineTo(x + 23, y + 45);
+                ctx.lineTo(x + 25, y + 55);
+                ctx.lineTo(x + 23, y + 45);
+                ctx.lineTo(x + 47, y + 45);
+                ctx.lineTo(x + 45, y + 55);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#696057'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0e0301'; // 선 색상
+                ctx.arc(x + 35, y + 39.5, 18, (Math.PI / 180) * 165, (Math.PI / 180) * 15);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Garage { // 창고 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#962b25'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3d000c'; // 선 색상
+                ctx.lineTo(x + 7, y + 30);
+                ctx.lineTo(x + 17, y + 15);
+                ctx.lineTo(x + 35, y + 7);
+                ctx.lineTo(x + 53, y + 15);
+                ctx.lineTo(x + 63, y + 30);
+                ctx.lineTo(x + 63, y + 53);
+                ctx.lineTo(x + 7, y + 53);
+                ctx.lineTo(x + 7, y + 30);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#693237'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3d000c'; // 선 색상
+                ctx.lineTo(x + 7, y + 30);
+                ctx.lineTo(x + 17, y + 15);
+                ctx.lineTo(x + 35, y + 7);
+                ctx.lineTo(x + 53, y + 15);
+                ctx.lineTo(x + 63, y + 30);
+                ctx.lineTo(x + 70, y + 26);
+                ctx.lineTo(x + 59, y + 9);
+                ctx.lineTo(x + 35, y - 3);
+                ctx.lineTo(x + 11, y + 9);
+                ctx.lineTo(x, y + 26);
+                ctx.lineTo(x + 7, y + 30);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#eeddcd'; // 선 색상
+                ctx.lineTo(x + 19, y + 22);
+                ctx.lineTo(x + 50, y + 22);
+                ctx.lineTo(x + 50, y + 45);
+                ctx.lineTo(x + 19, y + 45);
+                ctx.lineTo(x + 19, y + 22);
+                ctx.stroke();
+
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.lineTo(x + 19, y + 22);
+                ctx.lineTo(x + 50, y + 45);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x + 50, y + 22);
+                ctx.lineTo(x + 19, y + 45);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class AXE { // 퀘스트 1 아이콘 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#e4e2e3'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#5f2e27'; // 선 색상
+                ctx.moveTo(x + 15, y +35);
+                ctx.lineTo(x + 42, y + 35);
+                ctx.lineTo(x + 42, y + 55);
+                ctx.lineTo(x + 15, y + 55);
+                ctx.lineTo(x + 15, y + 35);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x+22, y +22);
+                ctx.lineTo(x+3, y +38);
+                ctx.lineTo(x, y +35);
+                ctx.lineTo(x + 20, y +15);
+                ctx.lineTo(x + 18, y +13);
+                ctx.lineTo(x + 23, y +8);
+                ctx.lineTo(x + 28, y +13);
+                ctx.lineTo(x + 38, y +17);
+                ctx.lineTo(x + 22, y +32);
+                ctx.lineTo(x + 22, y +22);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Mapp { // 퀘스트 1 아이콘 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#e4e2e3'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#5f2e27'; // 선 색상
+                ctx.lineTo(x + 6, y + 18);
+                ctx.lineTo(x + 46, y + 18);
+                ctx.lineTo(x + 46, y + 50);
+                ctx.lineTo(x + 6, y + 50);
+                ctx.lineTo(x + 6, y + 18);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Sword { // 퀘스트 1 아이콘 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#e4e2e3'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#5f2e27'; // 선 색상
+                ctx.moveTo(x + 36, y + 10);
+                ctx.lineTo(x + 36, y + 10);
+                ctx.lineTo(x + 20, y + 26);
+                ctx.lineTo(x + 29, y + 35);
+                ctx.lineTo(x + 11, y + 17);
+                ctx.lineTo(x + 28, y);
+                ctx.lineTo(x + 45, y);
+                ctx.lineTo(x + 45, y + 19);
+                ctx.lineTo(x + 29, y + 35);
+                ctx.lineTo(x + 32, y + 38);
+                ctx.lineTo(x + 25, y + 45);
+                ctx.lineTo(x + 21, y + 45);
+                ctx.lineTo(x + 16, y + 40);
+                ctx.lineTo(x + 13, y + 43);
+                ctx.bezierCurveTo(x + 13, y + 55, x - 8, y + 32, x + 3, y + 33);
+                ctx.lineTo(x + 5, y + 30);
+                ctx.lineTo(x + 2, y + 27);
+                ctx.lineTo(x + 2, y + 22);
+                ctx.lineTo(x + 9, y + 15);
+                ctx.lineTo(x + 11, y + 17);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Home { // 퀘스트 2 아이콘 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#e4e2e3'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#5f2e27'; // 선 색상
+                ctx.lineTo(x, y + 25);
+                ctx.lineTo(x + 21, y + 12);
+                ctx.lineTo(x + 42, y + 26);
+                ctx.lineTo(x + 42, y + 32);
+                ctx.lineTo(x + 38, y + 32);
+                ctx.lineTo(x + 38, y + 46);
+                ctx.lineTo(x + 3, y + 46);
+                ctx.lineTo(x + 3, y + 40);
+                ctx.arc(x + 2, y + 29, 4, (Math.PI / 180) * 80, (Math.PI / 180) * 215);
+                ctx.lineTo(x, y + 25);
+                ctx.fill();
+                ctx.stroke();
+
+                const House_glass_1 = new Rounded_Rect(x + 15, y + 29, 9, 9, 2, '#5d302b', '#5d302b', 3, 1);
+                House_glass_1.draw();
+
+                ctx.beginPath();
+                ctx.strokeStyle = '#e4e2e3'; // 선 색상
+                ctx.lineTo(x + 20, y + 20);
+                ctx.lineTo(x + 20, y + 40);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x + 10, y + 33);
+                ctx.lineTo(x + 40, y + 33);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle = '#5f2e27'; // 선 색상
+                ctx.lineTo(x + 16, y + 48);
+                ctx.lineTo(x + 30, y + 33);
+                ctx.lineTo(x + 32, y + 40);
+                ctx.lineTo(x + 37, y + 33);
+                ctx.lineTo(x + 37, y + 20);
+                ctx.lineTo(x + 52, y + 32);
+                ctx.lineTo(x + 40, y + 36);
+                ctx.lineTo(x + 35, y + 43);
+                ctx.lineTo(x + 45, y + 43);
+                ctx.lineTo(x + 33, y + 58);
+                ctx.lineTo(x + 20, y + 60);
+                ctx.lineTo(x + 16, y + 48);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Sword_play { // PLAY! 버튼의 칼 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#ffffff'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0f0f17'; // 선 색상
+                ctx.lineTo(x + 8, y + 2);
+                ctx.lineTo(x + 30, y - 1);
+                ctx.lineTo(x + 45, y + 15);
+                ctx.lineTo(x + 20, y + 38);
+                ctx.lineTo(x + 5, y + 25);
+                ctx.lineTo(x + 8, y + 2);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffc74c'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0f0f17'; // 선 색상
+                ctx.lineTo(x + 40, y + 20);
+                ctx.lineTo(x + 65, y + 31);
+                ctx.lineTo(x + 71, y + 38);
+                ctx.lineTo(x + 63, y + 43);
+                ctx.lineTo(x + 67, y + 48);
+                ctx.lineTo(x + 73, y + 48);
+                ctx.lineTo(x + 70, y + 65);
+                ctx.lineTo(x + 53, y + 68);
+                ctx.lineTo(x + 53, y + 61);
+                ctx.lineTo(x + 48, y + 55);
+                ctx.lineTo(x + 40, y + 63);
+                ctx.lineTo(x + 40, y + 20);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#be6521'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0f0f17'; // 선 색상
+                ctx.lineTo(x + 63, y + 43);
+                ctx.lineTo(x + 67, y + 48);
+                ctx.lineTo(x + 53, y + 61);
+                ctx.lineTo(x + 48, y + 55);
+                ctx.lineTo(x + 63, y + 43);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffffff'; // 평면 색상
+                ctx.beginPath();
+                ctx.lineTo(x + 20, y + 35);
+                ctx.lineTo(x + 48, y - 1);
+                ctx.lineTo(x + 72, y + 2);
+                ctx.lineTo(x + 73, y + 28);
+                ctx.lineTo(x + 39, y + 55);
+                ctx.lineTo(x + 20, y + 35);
+                ctx.fill();
+                ctx.stroke();
+                ctx.strokeStyle = '#0f0f17'; // 선 색상
+
+                ctx.fillStyle = '#ffc74c'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0f0f17'; // 선 색상
+                ctx.lineTo(x + 17, y + 25);
+                ctx.lineTo(x + 49, y + 56);
+                ctx.lineTo(x + 36, y + 66);
+                ctx.lineTo(x + 30, y + 57);
+                ctx.lineTo(x + 25, y + 61);
+                ctx.lineTo(x + 25, y + 68);
+                ctx.lineTo(x + 10, y + 64);
+                ctx.lineTo(x + 6, y + 48);
+                ctx.lineTo(x + 12, y + 48);
+                ctx.lineTo(x + 16, y + 42);
+                ctx.lineTo(x + 8, y + 38);
+                ctx.lineTo(x + 17, y + 25);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#be6521'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0f0f17'; // 선 색상
+                ctx.lineTo(x + 25, y + 61);
+                ctx.lineTo(x + 30, y + 57);
+                ctx.lineTo(x + 16, y + 42);
+                ctx.lineTo(x + 12, y + 48);
+                ctx.lineTo(x + 25, y + 61);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#416565'; // 선 색상
+                ctx.lineTo(x + 50, y + 22);
+                ctx.lineTo(x + 33, y + 41);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Cookie_act { // 퀘스트 2 아이콘 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#dfbc68'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3e020a'; // 선 색상
+                ctx.arc(x + 33, y + 29, 30, (Math.PI / 180) * 75, (Math.PI / 180) * 105, -1);
+                ctx.lineTo(x + 26, y + 60);
+                ctx.lineTo(x + 33, y + 70);
+                ctx.lineTo(x + 42, y + 58);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#6d2c28'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#381406'; // 선 색상
+                ctx.arc(x + 33, y + 29, 23, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#df9a4d'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3d1700'; // 선 색상
+                ctx.lineTo(x + 26, y + 47);
+                ctx.lineTo(x + 20, y + 42);
+                ctx.lineTo(x + 25, y + 35);
+                ctx.lineTo(x + 25, y + 32);
+                ctx.lineTo(x + 19, y + 32);
+                ctx.lineTo(x + 19, y + 25);
+                ctx.arc(x + 32.5, y + 18, 9, (Math.PI / 180) * 135, (Math.PI / 180) * 45);
+                ctx.lineTo(x + 45.5, y + 25);
+                ctx.lineTo(x + 45.5, y + 32);
+                ctx.lineTo(x + 40, y + 32);
+                ctx.lineTo(x + 40, y + 35);
+                ctx.lineTo(x + 45, y + 42);
+                ctx.lineTo(x + 39, y + 47);
+                ctx.lineTo(x + 32.5, y + 42);
+                ctx.lineTo(x + 26, y + 47);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Shop { // 상점 열기구 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#e78838'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3e000d'; // 선 색상
+                ctx.lineTo(x + 2, y + 57);
+                ctx.lineTo(x + 1, y + 37);
+                ctx.lineTo(x + 7, y + 30);
+                ctx.lineTo(x + 7, y + 10);
+                ctx.lineTo(x + 15, y + 10);
+                ctx.lineTo(x + 15, y + 30);
+                ctx.lineTo(x + 7, y + 30);
+                ctx.lineTo(x + 45, y + 30);
+                ctx.lineTo(x + 45, y + 10);
+                ctx.lineTo(x + 53, y + 10);
+                ctx.lineTo(x + 53, y + 30);
+                ctx.lineTo(x + 45, y + 30);
+                ctx.lineTo(x + 53, y + 30);
+                ctx.lineTo(x + 59, y + 37);
+                ctx.lineTo(x + 58, y + 57);
+                ctx.lineTo(x + 2, y + 57);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#c3040b'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3e000d'; // 선 색상
+                ctx.arc(x + 50, y + 8.5, 12, (Math.PI / 180) * 315, (Math.PI / 180) * 135);
+                ctx.arc(x + 30, y + 8.5, 12, (Math.PI / 180) * 45, (Math.PI / 180) * 135);
+                ctx.arc(x + 10, y + 8.5, 12, (Math.PI / 180) * 45, (Math.PI / 180) * 225);
+                ctx.lineTo(x + 59, y);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Event_image { // 이벤트 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#b4001b'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3d000a'; // 선 색상
+                ctx.lineTo(x + 5, y + 58);
+                ctx.lineTo(x + 8, y + 15);
+                ctx.lineTo(x + 60, y + 12);
+                ctx.lineTo(x + 68, y + 58);
+                ctx.lineTo(x + 20, y + 65);
+                ctx.lineTo(x + 15, y + 20);
+                ctx.lineTo(x + 19, y + 58);
+                ctx.lineTo(x + 5, y + 58);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#eceddd'; // 평면 색상
+                ctx.beginPath();
+                ctx.strokeStyle = '#eceddd'; // 선 색상
+                ctx.lineTo(x + 14, y + 21);
+                ctx.lineTo(x + 17, y + 53);
+                ctx.lineTo(x + 10, y + 53);
+                ctx.lineTo(x + 14, y + 20);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#fceaac'; // 평면 색상
+                ctx.beginPath();
+                ctx.strokeStyle = '#fceaac'; // 선 색상
+                ctx.lineTo(x + 27, y + 30);
+                ctx.lineTo(x + 52, y + 28);
+                ctx.lineTo(x + 55, y + 48);
+                ctx.lineTo(x + 30, y + 50);
+                ctx.lineTo(x + 27, y + 30);
+                ctx.arc(x + 36, y + 28, 2, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.arc(x + 42, y + 28, 2, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle = '#b4001b'; // 선 색상
+                ctx.lineTo(x + 40, y + 31);
+                ctx.lineTo(x + 43, y + 49);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle = '#b4001b'; // 선 색상
+                ctx.lineTo(x + 24, y + 40);
+                ctx.lineTo(x + 60, y + 37);
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Edit_image { // 편집 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#eabf71'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3b040a'; // 선 색상
+                ctx.lineTo(x + 13, y + 19);
+                ctx.lineTo(x + 8, y + 14);
+                ctx.lineTo(x + 5, y + 17);
+                ctx.lineTo(x, y + 17);
+                ctx.lineTo(x, y);
+                ctx.lineTo(x + 23, y);
+                ctx.lineTo(x + 23, y + 7);
+                ctx.lineTo(x + 26, y + 10);
+                ctx.lineTo(x + 32, y + 10);
+                ctx.lineTo(x + 35, y + 7);
+                ctx.lineTo(x + 35, y);
+                ctx.lineTo(x + 58, y);
+                ctx.lineTo(x + 58, y + 17);
+                ctx.lineTo(x + 53, y + 17);
+                ctx.lineTo(x + 50, y + 14);
+                ctx.lineTo(x + 45, y + 19);
+                ctx.lineTo(x + 13, y + 19);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#fdf4cd'; // 평면 색상
+                ctx.beginPath();
+                ctx.strokeStyle = '#3b040a'; // 선 색상
+                ctx.lineTo(x + 28, y + 8);
+                ctx.lineTo(x + 48, y + 20);
+                ctx.lineTo(x + 28, y + 32);
+                ctx.lineTo(x + 8, y + 20);
+                ctx.lineTo(x + 28, y + 8);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#eabf71'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3b040a'; // 선 색상
+                ctx.lineTo(x + 26, y + 30);
+                ctx.lineTo(x + 26, y + 26);
+                ctx.lineTo(x + 13, y + 20);
+                ctx.lineTo(x + 8, y + 26);
+                ctx.lineTo(x + 5, y + 23);
+                ctx.lineTo(x, y + 23);
+                ctx.lineTo(x, y + 38);
+                ctx.lineTo(x + 23, y + 38);
+                ctx.lineTo(x + 23, y + 33);
+                ctx.lineTo(x + 26, y + 30);
+                ctx.lineTo(x + 32, y + 30);
+                ctx.lineTo(x + 35, y + 33);
+                ctx.lineTo(x + 35, y + 38);
+                ctx.lineTo(x + 58, y + 38);
+                ctx.lineTo(x + 58, y + 23);
+                ctx.lineTo(x + 53, y + 23);
+                ctx.lineTo(x + 50, y + 26);
+                ctx.lineTo(x + 43, y + 20);
+                ctx.lineTo(x + 32, y + 26);
+                ctx.lineTo(x + 32, y + 30);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Construction { // 건설하기 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#406592'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0b151f'; // 선 색상
+                ctx.lineTo(x + 6, y + 72);
+                ctx.lineTo(x + 2, y + 90);
+                ctx.bezierCurveTo(x + 22, y + 110, x + 94, y + 110, x + 114, y + 90);
+                ctx.lineTo(x + 110, y + 72);
+                ctx.bezierCurveTo(x + 80, y + 55, x + 36, y + 55, x + 6, y + 72);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#fdee79'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3c0508'; // 선 색상
+                ctx.arc(x + 65, y + 45, 26, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#c70829'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#39060b'; // 선 색상
+                ctx.lineTo(x + 38, y + 45);
+                ctx.lineTo(x + 42, y + 0);
+                ctx.lineTo(x + 80, y + 22);
+                ctx.bezierCurveTo(x + 80, y + 42, x + 38, y + 50, x + 38, y + 45);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f3f4ec'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#b79ea2'; // 선 색상
+                ctx.lineTo(x + 38, y + 45);
+                ctx.arc(x + 38, y + 50, 5, (Math.PI / 180) * 195, (Math.PI / 180) * 80, -1);
+                ctx.bezierCurveTo(x + 48, y + 50, x + 70, y + 48, x + 80, y + 36);
+                ctx.arc(x + 84, y + 26, 5, (Math.PI / 180) * 45, (Math.PI / 180) * 225, -1);
+                ctx.bezierCurveTo(x + 80, y + 35, x + 38, y + 48, x + 38, y + 45);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffdff2'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#de7aae'; // 선 색상
+                ctx.arc(x + 71, y + 63, 10, (Math.PI / 180) * 135, (Math.PI / 180) * 80);
+                ctx.lineTo(x + 61, y + 75);
+                ctx.lineTo(x + 63, y + 70);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(x + 89, y + 52, 10, (Math.PI / 180) * 30, (Math.PI / 180) * 350);
+                ctx.lineTo(x + 103, y + 49);
+                ctx.lineTo(x + 97, y + 59);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#db092c'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#c22d4a'; // 선 색상
+                ctx.arc(x + 78, y + 52, 5, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#f5ddbb'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#461c1d'; // 선 색상
+                ctx.lineTo(x + 42, y + 61);
+                ctx.lineTo(x + 60, y + 71);
+                ctx.lineTo(x + 58, y + 78);
+                ctx.lineTo(x + 40, y + 68);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#a95052'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#461c1d'; // 선 색상
+                ctx.lineTo(x + 2, y + 70);
+                ctx.lineTo(x + 7, y + 55);
+                ctx.lineTo(x + 10, y + 55);
+                ctx.lineTo(x + 13, y + 50);
+                ctx.lineTo(x + 10, y + 47);
+                ctx.lineTo(x + 15, y + 33);
+                ctx.bezierCurveTo(x + 25, y + 28, x + 39, y + 25, x + 45, y + 47);
+                ctx.lineTo(x + 40, y + 61);
+                ctx.lineTo(x + 32, y + 80);
+                ctx.bezierCurveTo(x + 22, y + 82, x + 12, y + 88, x + 2, y + 70);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#fcfcfc'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#461c1d'; // 선 색상
+                ctx.lineTo(x + 15, y + 33);
+                ctx.bezierCurveTo(x + 25, y + 28, x + 39, y + 25, x + 45, y + 47);
+                ctx.bezierCurveTo(x + 35, y + 50, x + 20, y + 55, x + 15, y + 33);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#fdee79'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#461c1d'; // 선 색상
+                ctx.arc(x + 41, y + 66, 9, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Construction_Map { // 지도 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#406592'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#0b151f'; // 선 색상
+                ctx.lineTo(x + 6, y + 72);
+                ctx.lineTo(x + 2, y + 90);
+                ctx.bezierCurveTo(x + 22, y + 110, x + 94, y + 110, x + 114, y + 90);
+                ctx.lineTo(x + 110, y + 72);
+                ctx.bezierCurveTo(x + 80, y + 55, x + 36, y + 55, x + 6, y + 72);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#fbebaf'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#330507'; // 선 색상
+                ctx.lineTo(x + 15, y + 70);
+                ctx.lineTo(x + 15, y + 10);
+                ctx.bezierCurveTo(x + 25, y + 5, x + 20, y + 5, x + 30, y + 10);
+                ctx.bezierCurveTo(x + 40, y + 15, x + 35, y + 15, x + 45, y + 10);
+                ctx.bezierCurveTo(x + 55, y + 5, x + 45, y + 5, x + 60, y + 10);
+                ctx.bezierCurveTo(x + 70, y + 15, x + 80, y + 15, x + 90, y + 10);
+                ctx.lineTo(x + 90, y + 70);
+                ctx.bezierCurveTo(x + 80, y + 75, x + 70, y + 75, x + 60, y + 70);
+                ctx.bezierCurveTo(x + 50, y + 65, x + 55, y + 65, x + 45, y + 70);
+                ctx.bezierCurveTo(x + 35, y + 75, x + 25, y + 75, x + 15, y + 70);
+                ctx.fill();
+                ctx.stroke();             
+                ctx.restore();
+            }
+        }
+        class Hund { // 진행률 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#406592'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#000000'; // 선 색상
+                ctx.fill();
+                ctx.stroke();             
+
+                var polygon1=new Polygon(x+486,y+686,12,5,0,'#ffffff','#ffa902','#ffffff');
+                polygon1.filled(context);
+
+                var hundtext=new Texttext('100%',506,693,18,'#ffffff','Dotum','bold');
+                hundtext.Write();
+
+                var hundbar=new Rounded_Rect(570,676,400,20,10,'#fff000','#000000',2,1);
+                hundbar.draw();
+                ctx.restore();
+            }
+        }
+        class Tree { // 나무 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#86b7f9'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#380408'; // 선 색상
+
+                ctx.lineTo(x + 58, y + 28);
+                ctx.bezierCurveTo(x + 70, y + 18, x + 72, y + 35, x + 63, y + 43);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(x + 38, y + 43, 25, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x + 18, y + 30);
+                ctx.bezierCurveTo(x + 0, y + 25, x, y + 35, x + 15, y + 52);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#a25ae4'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#430b18'; // 선 색상
+                ctx.lineTo(x + 38, y + 17);
+                ctx.bezierCurveTo(x + 45, y + 25, x + 65, y + 15, x + 65, y - 2);
+                ctx.bezierCurveTo(x + 55, y - 2, x + 48, y - 5, x + 38, y + 12);
+                ctx.bezierCurveTo(x + 28, y - 5, x + 15, y - 2, x + 5, y + 4);
+                ctx.lineTo(x + 12, y + 6);
+                ctx.bezierCurveTo(x + 17, y + 25, x + 28, y + 22, x + 38, y + 17);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Tree1 { // 나무 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                ctx.save();
+
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#4d251d'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#4d251d'; // 선 색상
+                var tree_1_gi=new Map1Tree(x+1200,y+700);
+                var tree_2_gi=new Map1Tree(x+1500,y+100);
+                var tree_3_gi=new Map1Tree(x+1300,y+300);
+                var tree_4_gi=new Map1Tree(x+300,y+700);
+                var tree_5_gi=new Map1Tree(x+1340,y+150);
+                tree_1_gi.draw(ctx);
+                tree_2_gi.draw(ctx);
+                tree_3_gi.draw(ctx);
+                tree_4_gi.draw(ctx);
+                tree_5_gi.draw(ctx);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.fillStyle = '#339d75'; // 평면 색상
+                ctx.strokeStyle = '#339d75'; // 선 색상
+                var polygon4=new Polygon(x+300,y+700,100,6,0,'#ffffff','#669d75','#ffffff');
+                var tree_1_leaf=new Grass_Tree(x+1200,y+700,90);
+                var tree_2_leaf=new Grass_Tree(x+1500,y+100,90);
+                var tree_5_leaf=new Grass_Tree(x+1340,y+150,90);
+                var polygon3=new Polygon(x+1300,y+300,100,6,0,'#ffffff','#33ee75','#ffffff');
+                polygon3.filled(context);
+                polygon4.filled(context);
+                tree_1_leaf.draw(ctx);
+                tree_2_leaf.draw(ctx);
+                //tree_3_leaf.draw(ctx);
+                //tree_4_leaf.draw(ctx);
+                tree_5_leaf.draw(ctx);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        var Map1Tree=function(x,y){ // 맵1에서 나무를 그리는 함수
+            this.x = Number(x);
+            this.y = Number(y);
+        };
+        Map1Tree.prototype={
+            madegi:function(context){
+                context.save();
+                context.fillStyle = '#4d251d'; // 평면 색상
+                context.lineWidth = 2; // 선 굵기
+                context.strokeStyle = '#4d251d'; // 선 색상
+                ctx.beginPath();
+                context.lineTo(this.x-40,this.y+130);
+                context.lineTo(this.x-30,this.y+50);
+                context.lineTo(this.x+30,this.y+50);
+                context.lineTo(this.x+40,this.y+130);
+                context.lineTo(this.x-40,this.y+130);
+                context.fill();
+                context.stroke();
+            },
+            draw:function(context){
+                context.save();
+                this.madegi(context);
+                context.fill();
+                context.stroke();
+                context.restore();
+            }
+        };
+        class Train { // 곰젤리 열차 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#de3049'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#2e000a'; // 선 색상
+                ctx.lineTo(x + 13, y + 55);
+                ctx.lineTo(x + 13, y + 40);
+                ctx.lineTo(x + 21, y + 40);
+                ctx.lineTo(x + 21, y + 23);
+                ctx.lineTo(x + 24, y + 20);
+                ctx.lineTo(x + 24, y + 5);
+                ctx.lineTo(x + 33, y + 5);
+                ctx.lineTo(x + 33, y + 20);
+                ctx.lineTo(x + 53, y + 20);
+                ctx.lineTo(x + 53, y + 5);
+                ctx.lineTo(x + 62, y + 5);
+                ctx.lineTo(x + 62, y + 20);
+                ctx.lineTo(x + 63, y + 23);
+                ctx.lineTo(x + 63, y + 55);
+                ctx.lineTo(x + 13, y + 55);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#e3ac6b'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#2e000a'; // 선 색상
+                ctx.lineTo(x + 23, y + 58);
+                ctx.lineTo(x - 3, y + 58);
+                ctx.lineTo(x + 3, y + 43);
+                ctx.lineTo(x + 13, y + 43);
+                ctx.lineTo(x + 13, y + 22);
+                ctx.lineTo(x + 10, y + 12);
+                ctx.lineTo(x + 26, y + 12);
+                ctx.lineTo(x + 23, y + 22);
+                ctx.lineTo(x + 23, y + 58);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffe2f4'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#2e000a'; // 선 색상
+                ctx.lineTo(x + 5, y + 43);
+                ctx.lineTo(x + 13, y + 43);
+                ctx.lineTo(x + 13, y + 22);
+                ctx.lineTo(x + 5, y + 22);
+                ctx.lineTo(x + 5, y + 43);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#752d2e'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#2e000a'; // 선 색상  
+                ctx.lineTo(x + 20, y);
+                ctx.lineTo(x + 65, y);
+                ctx.lineTo(x + 65, y + 8);
+                ctx.lineTo(x + 20, y + 8);
+                ctx.lineTo(x + 20, y);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#752d2e'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#2e000a'; // 선 색상  
+                ctx.arc(x + 45, y + 52, 10, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.arc(x + 19, y + 55, 7, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Grass { // 잔디를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                const Grass_pan = new Rect(0, 0, 1520, 720, '#54ae68', '#54ae68', 3, 1);
+                Grass_pan.draw();
+
+                ctx.restore();
+            }
+        }
+        class Grass_Tree { // 잔디의 나무를 그리는 클래스
+            constructor(x = 0, y = 0, r = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.r = Number(r);
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    r
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#155b39'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#1b5954'; // 선 색상
+                ctx.arc(x, y, r, (Math.PI / 180) * 0, (Math.PI / 180) * 360);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Castle_bottom { // 성 바닥 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#ecc18a'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#8a4825'; // 선 색상
+
+                //ctx.lineTo(x,y);   
+                ctx.lineTo(x, y + 260);
+                ctx.lineTo(x + 130, y + 208);
+                ctx.bezierCurveTo(x + 370, y - 150, x + 900, y - 100, x + 1150, y + 230);
+                ctx.bezierCurveTo(x + 1250, y + 650, x + 520, y + 750, x + 220, y + 550);
+                ctx.lineTo(x, y + 658);
+                //ctx.arc(x+38,y+43,25,(Math.PI/180)*0,(Math.PI/180)*360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.restore();
+            }
+        }
+        class Balloon_Entry { // 열기구 타는 곳 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#e5a357'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#a26d3b'; // 선 색상
+                ctx.lineTo(x + 350, y + 150);
+                ctx.bezierCurveTo(x + 400, y - 50, x + 750, y - 50, x + 800, y + 150);
+                ctx.bezierCurveTo(x + 750, y + 350, x + 400, y + 350, x + 350, y + 150);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#9cd8ce'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#fcfad1'; // 선 색상
+                ctx.lineTo(x + 400, y + 150);
+                ctx.bezierCurveTo(x + 400, y + 0, x + 750, y + 0, x + 750, y + 150);
+                ctx.bezierCurveTo(x + 750, y + 250, x + 400, y + 250, x + 400, y + 150);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Tower { // 성의 탑 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#b97546'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#6c2e21'; // 선 색상
+                ctx.lineTo(x + 270, y + 470);
+                ctx.lineTo(x + 270, y + 340);
+                ctx.lineTo(x + 325, y + 320);
+                ctx.lineTo(x + 360, y + 345);
+                ctx.lineTo(x + 360, y + 370);
+                ctx.lineTo(x + 375, y + 360);
+                ctx.lineTo(x + 420, y + 375);
+                ctx.lineTo(x + 420, y + 395);
+                ctx.lineTo(x + 435, y + 380);
+                ctx.lineTo(x + 485, y + 395);
+                ctx.lineTo(x + 485, y + 420);
+                ctx.lineTo(x + 500, y + 400);
+                ctx.lineTo(x + 590, y + 400);
+                ctx.lineTo(x + 590, y + 600);
+                ctx.lineTo(x + 290, y + 540);
+                ctx.lineTo(x + 270, y + 470);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#b07e59'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#6c2e21'; // 선 색상
+                ctx.lineTo(x + 0, y + 580);
+                ctx.lineTo(x + 240, y + 460);
+                ctx.lineTo(x + 270, y + 480);
+                ctx.lineTo(x + 270, y + 450);
+                ctx.lineTo(x + 315, y + 430);
+                ctx.lineTo(x + 365, y + 460);
+                ctx.lineTo(x + 365, y + 570);
+                ctx.lineTo(x + 365, y + 570);
+                ctx.lineTo(x + 0, y + 750);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#b07e59'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#6c2e21'; // 선 색상
+                ctx.lineTo(x + 0, y + 580);
+                ctx.lineTo(x + 240, y + 460);
+                ctx.lineTo(x + 270, y + 480);
+                ctx.lineTo(x + 270, y + 450);
+                ctx.lineTo(x + 315, y + 430);
+                ctx.lineTo(x + 365, y + 460);
+                ctx.lineTo(x + 365, y + 570);
+                ctx.lineTo(x + 365, y + 570);
+                ctx.lineTo(x + 0, y + 750);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#5d445a'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3e2e4b'; // 선 색상
+                ctx.lineTo(x + 670, y + 530);
+                ctx.lineTo(x + 740, y + 580);
+                ctx.lineTo(x + 750, y + 640);
+                ctx.bezierCurveTo(x + 720, y + 700, x + 550, y + 700, x + 520, y + 640);
+                ctx.lineTo(x + 530, y + 580);
+                ctx.lineTo(x + 600, y + 530);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.strokeStyle = '#3e2e4b'; // 선 색상  
+                ctx.lineTo(x + 1150, y + 250);
+                ctx.lineTo(x + 1210, y + 320);
+                ctx.lineTo(x + 1220, y + 400);
+                ctx.bezierCurveTo(x + 1120, y + 500, x + 1020, y + 500, x + 920, y + 400);
+                ctx.lineTo(x + 920, y + 320);
+                ctx.lineTo(x + 990, y + 250);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#d29c5c'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#6c2e21'; // 선 색상
+                ctx.lineTo(x + 555, y + 580);
+                ctx.lineTo(x + 555, y + 480);
+                ctx.lineTo(x + 515, y + 450);
+                ctx.lineTo(x + 510, y + 380);
+                ctx.bezierCurveTo(x + 560, y + 280, x + 710, y + 280, x + 760, y + 380);
+                ctx.lineTo(x + 755, y + 450);
+                ctx.lineTo(x + 715, y + 480);
+                ctx.lineTo(x + 715, y + 580);
+                ctx.bezierCurveTo(x + 685, y + 630, x + 585, y + 630, x + 555, y + 580);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#d29c5c'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#6c2e21'; // 선 색상
+                ctx.lineTo(x + 555, y + 580);
+                ctx.lineTo(x + 555, y + 480);
+                ctx.lineTo(x + 515, y + 450);
+                ctx.lineTo(x + 510, y + 380);
+                ctx.bezierCurveTo(x + 560, y + 280, x + 710, y + 280, x + 760, y + 380);
+                ctx.lineTo(x + 755, y + 450);
+                ctx.lineTo(x + 715, y + 480);
+                ctx.lineTo(x + 715, y + 580);
+                ctx.bezierCurveTo(x + 685, y + 630, x + 585, y + 630, x + 555, y + 580);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#d29c5c'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#6c2e21'; // 선 색상
+                ctx.lineTo(x + 955, y + 340);
+                ctx.lineTo(x + 965, y + 240);
+                ctx.lineTo(x + 935, y + 200);
+                ctx.lineTo(x + 925, y + 100);
+                ctx.bezierCurveTo(x + 1025, y - 10, x + 1120, y - 10, x + 1220, y + 100);
+                ctx.lineTo(x + 1210, y + 200);
+                ctx.lineTo(x + 1180, y + 240);
+                ctx.lineTo(x + 1190, y + 340);
+                ctx.bezierCurveTo(x + 1090, y + 400, x + 1055, y + 400, x + 955, y + 340);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Gl{ // 길드 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#fef832'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#462611'; // 선 색상
+                ctx.lineTo(385,665);
+                ctx.lineTo(380,640);
+                ctx.bezierCurveTo(x+400,y+610,x+415,y+610,x+435,y+640);
+                ctx.lineTo(430,665);
+                ctx.lineTo(408,679);
+                ctx.lineTo(385,665);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class KA{ // 킹덤 아레나 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#cc1742'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#360000'; // 선 색상
+                ctx.lineTo(275,670);
+                ctx.lineTo(275,620);
+                ctx.lineTo(330,620);
+                ctx.lineTo(330,670);
+                ctx.lineTo(302,685);
+                ctx.lineTo(275,670);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class PPL{ // 현상수배 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#a6424a'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3c0103'; // 선 색상
+                ctx.lineTo(x+165,y+630);
+                ctx.lineTo(x+230,y+630);
+                ctx.lineTo(x+230,y+680);
+                ctx.lineTo(x+165,y+680);
+                ctx.lineTo(x+165,y+630);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#ffe5ca'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3c0103'; // 선 색상
+                ctx.lineTo(x+180,y+630);
+                ctx.lineTo(x+215,y+630);
+                ctx.lineTo(x+215,y+670);
+                ctx.lineTo(x+180,y+670);
+                ctx.lineTo(x+180,y+630);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        var Castle=function(x,y,w,h){ // 왕국가기 이미지를 그리는 함수
+            this.x = Number(x);
+            this.y = Number(y);
+            this.w= Number(w);
+            this.h= Number(h);
+        };
+        Castle.prototype={//왕국가기 이미지를 그리는 프로토타입
+            getPoints: function(){
+                var points=[];
+                points.push(new Point(this.x,this.y));
+                points.push(new Point(this.x+this.w,this.y));
+                points.push(new Point(this.x+this.w,this.y+this.h));
+                points.push(new Point(this.x,this.y+this.h));
+                points.push(new Point(this.x,this.y));
+                return points;
+            },
+            createPath:function(context){
+                var points=this.getPoints();
+                context.beginPath();
+                context.moveTo(points[0].x,points[0].y);
+                for(var i=1;i<5;++i){
+                    context.lineTo(points[i].x,points[i].y);
+                }
+                context.stroke();
+                context.fill();
+                context.closePath();
+                
+            },
+            stroke:function(context){
+                context.save();
+                this.createPath(context);
+                context.strokeStyle=1;
+                context.fill();
+                context.stroke();
+                context.restore();
+            },
+            filled:function(context){
+                context.save();
+                this.createPath(context);
+                context.fillStyle='#eebc75';
+                context.fill();
+                context.stroke();
+                context.restore();
+            }
+        };
+        var Semo=function(x,y,w,h){ // 왕국가기 이미지의 세모를 그리는 함수
+            this.x = Number(x);
+            this.y = Number(y);
+            this.w= Number(w);
+        };
+        Semo.prototype={
+            getPoints: function(){
+                var points=[];
+                points.push(new Point(this.x,this.y));
+                points.push(new Point(this.x+this.w,this.y));
+                points.push(new Point(this.x+(this.w/2),this.y-this.w));
+                points.push(new Point(this.x,this.y));
+                return points;
+            },
+            createPath:function(context){
+                var points=this.getPoints();
+                context.beginPath();
+                context.moveTo(points[0].x,points[0].y);
+                for(var i=1;i<3;++i){
+                    context.lineTo(points[i].x,points[i].y);
+                }
+                context.stroke();
+                context.fill();
+                context.closePath();
+                
+            },
+            stroke:function(context){
+                context.save();
+                this.createPath(context);
+                context.strokeStyle=1;
+                context.fill();
+                context.stroke();
+                context.restore();
+            },
+            filled:function(context){
+                context.save();
+                this.createPath(context);
+                context.fillStyle='#eebc75';
+                context.fill();
+                context.stroke();
+                context.restore();
+            }
+        };
+        class Conca{ // 왕국가기 이미지를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#a6424a'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3c0103'; // 선 색상
+                ctx.lineTo(x+165,y+630);
+                ctx.lineTo(x+230,y+630);
+                ctx.lineTo(x+230,y+680);
+                ctx.lineTo(x+165,y+680);
+                ctx.lineTo(x+165,y+630);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#c0050c'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3c0103'; // 선 색상
+                var se1=new Semo(1335,640,20);
+                ctx.fillStyle = '#c0050c'; // 평면 색상
+                var se2=new Semo(1405,640,20);
+                ctx.fillStyle = '#c0050c'; // 평면 색상
+                var se3=new Semo(1368,618,25);
+                se1.filled(context);
+                ctx.fill();
+                ctx.stroke();
+                se2.filled(context);
+                ctx.fill();
+                ctx.stroke();
+                se3.filled(context);
+                ctx.fill();
+                ctx.stroke();
+
+                var ca1=new Castle(1335,640,30,35);
+                var ca2=new Castle(1395,640,30,35);
+                var ca3=new Castle(1355,620,50,65);
+                ca1.filled(context);
+                ca2.filled(context);
+                ca3.filled(context);
+
+                ctx.fillStyle = '#ffe5ca'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#3c0103'; // 선 색상
+                ctx.lineTo(x+180,y+630);
+                ctx.lineTo(x+215,y+630);
+                ctx.lineTo(x+215,y+670);
+                ctx.lineTo(x+180,y+670);
+                ctx.lineTo(x+180,y+630);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class LP{ // 일반모드 오른쪽의 역삼각형을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#fef832'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#462611'; // 선 색상
+                ctx.fill();
+                ctx.stroke();
+
+                var polygon1=new Polygon(x+376,y+50,12,3,(Math.PI*180)/180,'#ffffff','#ffffff','#ffffff');
+                polygon1.filled(context);
+                ctx.restore();
+            }
+        }
+        class X{ // 열기구 창에서 오른쪽 상단의 X버튼을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#38a5e6'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#203143'; // 선 색상
+                ctx.arc(x+1418,y+35,28,(Math.PI/180)*0,(Math.PI/180)*360);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.fillStyle = '#ffffff'; // 평면 색상
+                ctx.lineWidth = 3; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#203143'; // 선 색상
+                ctx.lineTo(x+1410,y+35);
+                ctx.lineTo(x+1407,y+32);
+                ctx.arc(x+1410,y+27,5,(Math.PI/180)*135,(Math.PI/180)*315);
+                ctx.lineTo(x+1418,y+28);
+                ctx.lineTo(x+1421,y+25);
+                ctx.arc(x+1425,y+27,5,(Math.PI/180)*225,(Math.PI/180)*45);
+                ctx.lineTo(x+1425,y+35);
+                ctx.lineTo(x+1428,y+38);
+                ctx.arc(x+1425,y+43,5,(Math.PI/180)*315,(Math.PI/180)*135);
+                ctx.lineTo(x+1418,y+42);
+                ctx.lineTo(x+1415,y+45);
+                ctx.arc(x+1410,y+43,5,(Math.PI/180)*45,(Math.PI/180)*225);
+                ctx.lineTo(x+1410,y+35);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Percent{ // 에피소드 페이지에서 하단의 진행률을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#fefbea'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#653c26'; // 선 색상
+                ctx.lineTo(x+190,y+75);
+                ctx.lineTo(x+10,y+75);
+                ctx.lineTo(x+10,y+130);
+                ctx.lineTo(x+190,y+130);
+                ctx.arc(x+190,y+102,27.5,(Math.PI/180)*90,(Math.PI/180)*270,-1);
+                ctx.fill();
+                ctx.stroke();
+
+                const Struct2_Percent_bar=new Rounded_Rect(22,105,170,18,9,'#53524e','#000000',2,1);
+                Struct2_Percent_bar.draw();
+                const Struct2_Percent_now=new Rounded_Rect(23,106,85,16,8,'#ffd101','#000000',2,1);
+                Struct2_Percent_now.draw();
+                ctx.restore();
+            }
+        }
+        class Normal{ // 일반모드를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#ffffff'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#87826f'; // 선 색상
+                ctx.lineTo(x+170,y+65);
+                ctx.lineTo(x+235,y+65);
+                ctx.lineTo(x+235,y+95);
+                ctx.lineTo(x+220,y+95);
+                ctx.lineTo(x+210,y+100);
+                ctx.lineTo(x+210,y+95);
+                ctx.lineTo(x+170,y+95);
+                ctx.lineTo(x+170,y+65);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Struct2Tree{ // 열기구 페이지에서 나무를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#15422d'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#15422d'; // 선 색상
+
+                const Tree1=new Grass_Tree(1400,200,40);
+                const Tree2=new Grass_Tree(1300,200,80);
+                const Tree3=new Grass_Tree(1400,300,40);
+                const Tree4=new Grass_Tree(1350,280,43);
+                const Tree5=new Grass_Tree(1300,300,40);
+                
+                Tree1.draw();
+                Tree2.draw();
+                Tree3.draw();
+                Tree4.draw();
+                Tree5.draw();
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Reward{ // 열기구 페이지에서 보상창을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#f2e6da'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#000000'; // 선 색상
+                ctx.lineTo(x+775,y+220);
+                ctx.rect(x+775,y+220,90,y+90);
+                ctx.rect(x+875,y+220,90,y+90);
+                ctx.rect(x+975,y+220,90,y+90);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#b6d9ec'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#000000'; // 선 색상
+                ctx.lineTo(x+775,y+220);
+                ctx.rect(x+775,y+365,90,y+90);
+                ctx.rect(x+875,y+365,90,y+90);
+                ctx.rect(x+975,y+365,90,y+90);
+                ctx.rect(x+1075,y+365,90,y+90);
+                ctx.rect(x+1175,y+365,90,y+90);
+                ctx.rect(x+775,y+465,90,y+90);
+                ctx.rect(x+875,y+465,90,y+90);
+                ctx.rect(x+975,y+465,90,y+90);
+                ctx.rect(x+1075,y+465,90,y+90);
+                ctx.rect(x+1175,y+465,90,y+90);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x+1175,y+605);
+                ctx.lineTo(x+1175,y+565);
+                ctx.lineTo(x+1265,y+565);
+                ctx.lineTo(x+1265,y+605);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x+1075,y+605);
+                ctx.lineTo(x+1075,y+565);
+                ctx.lineTo(x+1165,y+565);
+                ctx.lineTo(x+1165,y+605);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x+975,y+605);
+                ctx.lineTo(x+975,y+565);
+                ctx.lineTo(x+1065,y+565);
+                ctx.lineTo(x+1065,y+605);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x+875,y+605);
+                ctx.lineTo(x+875,y+565);
+                ctx.lineTo(x+965,y+565);
+                ctx.lineTo(x+965,y+605);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.lineTo(x+775,y+605);
+                ctx.lineTo(x+775,y+565);
+                ctx.lineTo(x+865,y+565);
+                ctx.lineTo(x+865,y+605);
+                ctx.fill();
+                ctx.stroke();
+                
+                const Chip1=new Chip(800,400,'#f54d42','#c70100');
+                Chip1.draw();
+                const chip1=new ChipChip(900,400,'#f7523f','c70100');
+                const chip2=new ChipChip(1000,400,'#6888f7','#ffca60');
+                const chip3=new ChipChip(1100,400,'#97d62f','#ffca60');
+                const chip4=new ChipChip(1200,400,'#02ad6b','#fc7700');
+                const chip5=new ChipChip(800,500,'#fde500','#71c71e');
+                const chip6=new ChipChip(900,500,'#fbe4ba','#994715');
+                const chip7=new ChipChip(1000,500,'#834131','#ffca60');
+                const chip8=new ChipChip(1100,500,'#ba4ddc','#5c2c28');
+                const chip9=new ChipChip(1200,500,'#e99800','#038fff');
+                chip1.draw();
+                chip2.draw();
+                chip3.draw();
+                chip4.draw();
+                chip5.draw();
+                chip6.draw();
+                chip7.draw();
+                chip8.draw();
+                chip9.draw();
+
+                var polygong=new Polygon(820,260,30,5,0,'#ffffff','#f2a605','#ffffff');
+                polygong.filled(context);
+                const chunsa=new Circle(920,260,20,0,360,2,'#f2a605','#7d4d1d');
+                chunsa.draw();
+
+                const cCoin_outer_image = new Circle(1020, 260, 27, 0, 360, 3, '#fece02', '#4e2800'); // 동전 바깥 원 객체
+                const cCoin_inner_image = new Circle(1020, 260, 22, 0, 360, 2, '#edaa01', '#b58300'); // 동전 내부 원 객체
+                const cCoin_Kingdommark = new Kingdom_m(1641, 399, 0.6, '#d4a108'); // 왕관 아이콘
+                cCoin_outer_image.draw();
+                cCoin_inner_image.draw();
+                cCoin_Kingdommark.draw();
+
+                const basicr=new Rounded_Rect(950,170,140,30,15,'#e0d9bf','#b8ac9e',2,1);
+                const basicr_Text=new Texttext('기본 보상',990,190,14,'#817060','Gothic','bold');
+                const basicar=new Rounded_Rect(950,320,140,30,15,'#e0d9bf','#b8ac9e',2,1);
+                const basicar_Text=new Texttext('추가 보상',990,340,14,'#817060','Gothic','bold');
+                basicr.draw();
+                basicr_Text.Write();
+                basicar.draw();
+                basicar_Text.Write();
+
+                const Basic1_Text=new Texttext('850',805,290,18,'#ffffff','Gothic','bold');
+                const Basic2_E_Text=new Texttext('EXP',895,280,27,'#ffeb00','Gothic','bold');
+                const Basic2_Text=new Texttext('73',905,290,18,'#ffffff','Gothic','bold');
+                const Basic3_Text=new Texttext('256',1005,290,18,'#ffffff','Gothic','bold');
+                Basic1_Text.Write();
+                Basic2_E_Text.Write();
+                Basic2_Text.Write();
+                Basic3_Text.Write();
+
+                const mal=new Mal(790,350);
+                mal.draw();
+
+                const Add1_Text=new Texttext('대성공',800,375,14,'#000000','Gothic','bold');
+                const Add2_Text=new Texttext('4',815,440,18,'#ffffff','Gothic','bold');
+                Add1_Text.Write();
+                Add2_Text.Write();
+
+                ctx.restore();
+            }
+        }
+        class Chip{ // 열기구 보상창 페이지에서 보상 아이템을 그리는 클래스
+            constructor(x = 0, y = 0, cl,cll) {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.cl=cl;
+                this.cll=cll;
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    cl,
+                    cll
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                               
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = cl; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#efbd8a'; // 선 색상
+                ctx.lineTo(x,y);
+                ctx.lineTo(x+38,y-25);
+                ctx.lineTo(x+40,y+25);
+                ctx.lineTo(x+5,y+43);
+                ctx.lineTo(x,y);
+                ctx.fill();
+                ctx.stroke();
+
+                var polygon=new Polygon(820,410,12,5,0,'#ffffff',cll,'#ffffff');
+                polygon.filled(context);
+                ctx.restore();
+            }
+        }
+        class ChipChip{// 열기구 보상창 페이지에서 보상 아이템을 그리는 클래스
+            constructor(x = 0, y = 0, cl,cll) {
+                this.x = Number(x);
+                this.y = Number(y);
+                this.cl=cl;
+                this.cll=cll;
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                    cl,
+                    cll
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                               
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = cl; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#efbd8a'; // 선 색상
+                ctx.lineTo(x,y);
+                ctx.lineTo(x+38,y-25);
+                ctx.lineTo(x+40,y+25);
+                ctx.lineTo(x+5,y+43);
+                ctx.lineTo(x,y);
+                ctx.fill();
+                ctx.stroke();
+
+                var polygon1=new Polygon(x+20,y+10,12,5,0,'#ffffff',cll,'#ffffff');
+                polygon1.filled(context);
+                ctx.restore();
+            }
+        }
+        class BallBalloon{ // 열기구를 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                               
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#df8b4d'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#602e15'; // 선 색상
+
+                ctx.lineTo(x+360,y+600);
+                ctx.lineTo(x+240,y+560);
+                ctx.lineTo(x+200,y+460);
+                ctx.lineTo(x+220,y+400);
+                ctx.lineTo(x+360,y+500);
+                ctx.lineTo(x+540,y+500);
+                ctx.lineTo(x+720,y+400);
+                ctx.lineTo(x+740,y+460);
+                ctx.lineTo(x+700,y+560);
+                ctx.lineTo(x+540,y+600);
+                ctx.lineTo(x+360,y+600);
+                ctx.fill();
+                ctx.stroke();
+                
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#d2189f'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#a93f97'; // 선 색상
+                ctx.arc(x+450,y+10,300,(Math.PI/180)*0,(Math.PI/180)*360);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#eed149'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#eed149'; // 선 색상
+                ctx.lineTo(x+185,y+150);
+                ctx.bezierCurveTo(x+255,y+300,x+250,y+250,x+300,y+270);
+                ctx.bezierCurveTo(x+350,y+350,x+400,y+350,x+450,y+310);
+                ctx.bezierCurveTo(x+500,y+350,x+550,y+350,x+600,y+270);
+                ctx.bezierCurveTo(x+650,y+300,x+645,y+250,x+715,y+150);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#2c8255'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#2c8255'; // 선 색상
+                ctx.lineTo(x+160,y+80);
+                ctx.lineTo(x+185,y+150);
+                ctx.bezierCurveTo(x+235,y+200,x+250,y+250,x+300,y+200);
+                ctx.bezierCurveTo(x+350,y+250,x+400,y+250,x+450,y+200);
+                ctx.bezierCurveTo(x+500,y+250,x+550,y+250,x+600,y+200);
+                ctx.bezierCurveTo(x+650,y+200,x+665,y+250,x+715,y+150);
+                ctx.lineTo(x+740,y+80);
+                ctx.bezierCurveTo(x+700,y+100,x+640,y+100,x+600,y+50);
+                ctx.bezierCurveTo(x+550,y+100,x+500,y+100,x+450,y+50);
+                ctx.bezierCurveTo(x+400,y+100,x+350,y+100,x+300,y+50);
+                ctx.bezierCurveTo(x+250,y+100,x+210,y+100,x+160,y+80);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#fbd493'; // 평면 색상
+                ctx.lineWidth = 8; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#fbd493'; // 선 색상
+                ctx.lineTo(x+720,y+410);
+                ctx.lineTo(x+640,y+240);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#fbd493'; // 평면 색상
+                ctx.lineWidth = 8; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#fbd493'; // 선 색상
+                ctx.lineTo(x+220,y+410);
+                ctx.lineTo(x+280,y+250);
+                ctx.fill();
+                ctx.stroke();
+
+                const balchara=new Image_put(x+350,y+330,"files/Chara.png",200,200);
+                balchara.draw();
+                ctx.restore();
+            }
+            move(xx,yy){
+                this.x=xx;
+                this.y=yy;
+                const BallBall=new BallBalloon(xx,yy);
+                BallBall.draw();
+            }
+        }
+        class Struct2Ball{ // 열기구 페이지에서 열기구 착륙장을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y,
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                               
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#79cdff'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#79cdff'; // 선 색상
+                ctx.lineTo(x+30,y+500);
+                ctx.bezierCurveTo(x+200,y+100,x+800,y+300,x+803,y+403);
+                ctx.bezierCurveTo(x+1000,y+1000,x+0,y+900,x+30,y+500);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        
+        var Point=function(x,y){
+            this.x=x;
+            this.y=y;
+        }
+        var Polygon=function(x,y,r,s,sa,sc,fc,fill){ // 다각형을 그리는 함수
+            this.x = Number(x);
+            this.y = Number(y);
+            this.r=Number(r);
+            this.s=Number(s);
+            this.sa=Number(sa);
+            this.sc=sc;
+            this.fc=fc;
+            this.fill=fill;
+        };
+        Polygon.prototype={
+            getPoints: function(){
+                var points=[],
+                angle=this.sa||0;
+
+                for(var i=0;i<this.s;++i){
+                    points.push(new Point(this.x+this.r*Math.sin(angle),this.y-this.r*Math.cos(angle)));
+                    angle+=2*Math.PI/this.s;
+                }
+                return points;
+            },
+            createPath:function(context){
+                var points=this.getPoints();
+
+                context.beginPath();
+                context.moveTo(points[0].x,points[0].y);
+                for(var i=1;i<this.s;++i){
+                    context.lineTo(points[i].x,points[i].y);
+                }
+                context.stroke();
+                context.fill();
+                context.closePath();
+                
+            },
+            stroke:function(context){
+                context.save();
+                this.createPath(context);
+                context.strokeStyle=this.sc;
+                context.fill();
+                context.stroke();
+                context.restore();
+            },
+            filled:function(context){
+                context.save();
+                this.createPath(context);
+                context.fillStyle=this.fc;
+                context.fill();
+                context.stroke();
+                context.restore();
+            }
+        };
+        class Mal{ // 말풍선을 그리는 클래스(대성공)
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                               
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#ffffff'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#000000'; // 선 색상
+                ctx.lineTo(x,y);
+                ctx.lineTo(x,y+30);
+                ctx.lineTo(x+40,y+30);
+                ctx.lineTo(x+40,y+33);
+                ctx.lineTo(x+43,y+30);
+                ctx.lineTo(x+60,y+30);
+                ctx.lineTo(x+60,y);
+                ctx.lineTo(x,y);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        class Map3{ // 세번쩨 페이지 맵을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                
+                const ocean=new Rect(0,0,cvs.width,cvs.height,'#50e8f5','#50e8f5',2,1);
+                ocean.draw();
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#88d875'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#428f64'; // 선 색상
+                ctx.lineTo(x+1000,y+430);
+                ctx.bezierCurveTo(x+1050,y+480,x+1150,y+450,x+1200,y+390);
+                ctx.lineTo(x+1240,y+350);
+                ctx.lineTo(x+1270,y+330);
+                ctx.lineTo(x+1350,y+360);
+                ctx.lineTo(x+1400,y+360);
+                ctx.lineTo(x+1600,y+200);
+                ctx.lineTo(x+1300,y+100);
+                ctx.lineTo(x+800,y+100);
+                ctx.lineTo(x+200,y+400);
+                ctx.lineTo(x+50,y+330);
+                ctx.lineTo(x+0,y+360);
+                ctx.lineTo(x+0,y+800);
+                ctx.lineTo(x+800,y+800);
+                ctx.lineTo(x+800,y+700);
+                ctx.lineTo(x+850,y+650);
+                ctx.lineTo(x+950,y+650);
+                ctx.lineTo(x+990,y+610);
+                ctx.lineTo(x+980,y+510);
+                ctx.lineTo(x+1000,y+430);
+                ctx.fill();
+                ctx.stroke();
+
+                const star1=new ThreeStar(650,680);
+                const star2=new ThreeStar(600,530);
+                const star3=new ThreeStar(740,350);
+                const star4=new ThreeStar(915,320);
+                const star5=new ThreeStar(1110,310);
+                const star6=new ThreeStar(1170,220);
+                const star7=new ThreeStar(1355,230);
+                star1.draw();
+                star2.draw();
+                star3.draw();
+                star4.draw();
+                star5.draw();
+                star6.draw();
+                star7.draw();
+
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#88d875'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#428f64'; // 선 색상
+                const txt1=new Texttext('1-8',585,570,14,'#ffffff','Dotum','bold');
+                const txt2=new Texttext('1-7 젤리 나무 숲',590,715,14,'#ffffff','Dotum','bold');
+                const txt3=new Texttext('1-9 로얄젤리 꽃밭',675,390,14,'#ffffff','Dotum','bold');
+                const txt4=new Texttext('1-10',895,360,14,'#ffffff','Dotum','bold');
+                const txt5=new Texttext('1-11',1090,350,14,'#ffffff','Dotum','bold');
+                const txt6=new Texttext('1-12 로얄젤리 채집장',1095,265,14,'#ffffff','Dotum','bold');
+                const txt7=new Texttext('1-13',1340,275,14,'#ffffff','Dotum','bold');
+                txt1.Write();
+                txt2.Write();
+                txt3.Write();
+                txt4.Write();
+                txt5.Write();
+                txt6.Write();
+                txt7.Write();
+                ctx.restore();
+                
+            }
+        }
+        class ThreeStar{ // 입장맵 아이콘을 그리는 클래스
+            constructor(x = 0, y = 0) {
+                this.x = Number(x);
+                this.y = Number(y);
+            }
+            draw() {
+                const {
+                    x,
+                    y
+                } = this;
+                var cvs = document.getElementById('canvas');
+                var ctx = cvs.getContext('2d');
+                
+                const loc=new Circle(x,y,20,0,360,2,'#26a51a','#1b280a');
+                loc.draw();
+
+                ctx.save();
+                ctx.globalAlpha=1;
+                ctx.fillStyle = '#e89e0b'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.beginPath();
+                ctx.strokeStyle = '#428f64'; // 선 색상
+
+                var polygon1=new Polygon(x-15,y+10,8,5,0,'#ffffff','#e89e0b','#ffffff');
+                var polygon2=new Polygon(x,y+15,8,5,0,'#ffffff','#e89e0b','#ffffff');
+                var polygon3=new Polygon(x+15,y+10,8,5,0,'#ffffff','#e89e0b','#ffffff');
+                polygon1.filled(ctx);
+                polygon2.filled(ctx);
+                polygon3.filled(ctx);
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+
+        var WhiteCookie=function(src,x,y,w,h){ // 캐릭터 스프라이트를 그리는 함수
+            this.src=src;
+            this.x = Number(x);
+            this.y = Number(y);
+            this.w=Number(w);
+            this.h=Number(h);
+        };
+        WhiteCookie.prototype={
+            draw:function(context){
+                context.save();
+                var image = new Image();
+                image.src = this.src;             
+                context.drawImage(image, this.x, this.y, this.w, this.h);
+                context.stroke();
+                context.restore();
+            }
+        };
+        const chsize={
+            cszw(w){
+                this.w=w;
+                return this.w;
+            },
+            cszw(h){
+                this.h=h;
+                return this.h;
+            }
+        }
+
+        function Screen1() {
+            //잔디
+            const Grass_image = new Grass(0, 0);
+            Grass_image.draw();
+
+            //성바닥
+            const Castle_bottom_image = new Castle_bottom(0, 0);
+            Castle_bottom_image.draw();
+
+            //열기구탑승장
+            const Balloon_Entry_image = new Balloon_Entry(0, 0);
+            Balloon_Entry_image.draw();
+
+            //탑
+            const Castle_Tower_image = new Tower(0, 0);
+            Castle_Tower_image.draw();
+
+            //나무
+            const Grass_Tree_image = new Grass_Tree(620, 680, 90);
+            Grass_Tree_image.draw();
+            const Screen1_Tree=new Tree1(0,0);
+            Screen1_Tree.draw();
+
+            //캐릭터
+
+            const Banner = new Rect(100, 125, 210, 60, '#21c0f8', '#000000', 2, 1); // 배너 사각형
+            const Banner_Open1 = new Texttext('길드', 173, 153, 25, '#ffffff', 'Gothic', 'italic bold'); // '길드' 텍스트
+            const Banner_Open2 = new Texttext('그랜드 오픈', 170, 178, 25, '#ffffff', 'Gothic',
+            'italic bold'); // '그랜드 오픈' 텍스트
+            //const Banner_image=new Image_put(100,100,"files/Guild.png",85,85); // 이미지
+            Banner.draw();
+            Banner_Open1.Write();
+            Banner_Open2.Write();
+            //Banner_image.draw();
+
+            const Propile_text = new Rounded_Rect(40, 15, 300, 80, 20, '#000000', '#000000', 2, 0.5); // 프로필 텍스트 부분 사각형
+            const Propile_photo = new Rounded_Rect(15, 13, 85, 85, 15, '#4f004f', '#000000', 2, 1); // 프로필 사진 부분 정사각형
+            const Meat_R = new Rounded_Rect(670, 15, 115, 40, 10, '#000000', '#000000', 2, 0.5); // 고기 부분 사각형
+            const Coin = new Rounded_Rect(815, 15, 180, 40, 10, '#000000', '#000000', 2, 0.5); // 코인 부분 사각형
+            const Dia = new Rounded_Rect(1030, 15, 150, 40, 10, '#000000', '#000000', 2, 0.5); // 다이아몬드 부분 사각형
+            const Play_button = new Rounded_Rect(1175, 605, 265, 100, 20, '#2f4c6c', '#000000', 2, 1); // 플레이 버튼 사각형
+            Propile_text.draw();
+            Propile_photo.draw();
+            Meat_R.draw();
+            Coin.draw();
+            Dia.draw();
+            Play_button.draw();
+
+            const Quest1_outer_image = new Circle(1397, 283, 35, 0, 360, 5, '#bf503c', '#6a2118'); // 퀘스트 아이콘 그리기
+            const Quest1_inner_image = new Circle(1397, 283, 35, 315, 135, 5, '#a63b2b', '#6a2118'); // 퀘스트 아이콘 그리기
+            const Quest2_outer_image = new Circle(1397, 493, 35, 0, 360, 5, '#bf503c', '#6a2118'); // 퀘스트 아이콘 그리기
+            const Quest2_inner_image = new Circle(1397, 493, 35, 315, 135, 5, '#a63b2b', '#6a2118'); // 퀘스트 아이콘 그리기
+            const Quest3_outer_image = new Circle(1397, 388, 35, 0, 360, 5, '#9f6a4a', '#653b23'); // 퀘스트 아이콘 그리기
+            const Quest3_inner_image = new Circle(1397, 388, 35, 315, 135, 5, '#8a5241', '#653b23'); // 퀘스트 아이콘 그리기
+            const Quest1_levelbar = new Rounded_Rect(1356, 315, 80, 16, 8, '#000000', '#000000', 2, 0.5);
+            //const Quest1_nowlevelbar=new Rounded_Rect(1356,315,80,16,6,'#fff000','#fff000',0,1);
+            const Quest2_levelbar = new Rounded_Rect(1356, 420, 80, 16, 8, '#000000', '#000000', 2, 0.5);
+            const Quest2_nowlevelbar = new Rounded_Rect(1358, 422, 68, 12, 6, '#fff000', '#fff000', 0, 1);
+            const Quest3_levelbar = new Rounded_Rect(1356, 525, 80, 16, 8, '#000000', '#000000', 2, 0.5);
+
+            //퀘1: 칼 추가
+            //퀘2: 나무집 추가
+            const Quest_1 = new Texttext('0/1', 1386, 328, 15, '#ffffff', 'Gothic', 'bold');
+            const Quest_2 = new Texttext('0/3', 1386, 435, 15, '#ffffff', 'Gothic', 'bold');
+            const Quest_3 = new Texttext('0/1', 1386, 540, 15, '#ffffff', 'Gothic', 'bold');
+            Quest1_outer_image.draw();
+            Quest1_inner_image.draw();
+            Quest2_outer_image.draw();
+            Quest2_inner_image.draw();
+            Quest3_outer_image.draw();
+            Quest3_inner_image.draw();
+            Quest1_levelbar.draw();
+            //Quest1_nowlevelbar.draw();
+            Quest2_levelbar.draw();
+            Quest2_nowlevelbar.draw();
+            Quest3_levelbar.draw();
+            Quest_1.Write();
+            Quest_2.Write();
+            Quest_3.Write();
+
+            const Kingdompass = new Kingdom_pass(1330, 140); // 킹덤패스 아이콘 객체
+            Kingdompass.draw();
+
+            const Meat_image = new Meat(650, 10);
+            const Coin_outer_image = new Circle(823, 35, 27, 0, 360, 3, '#fece02', '#4e2800'); // 동전 바깥 원 객체
+            const Coin_inner_image = new Circle(823, 35, 22, 0, 360, 2, '#edaa01', '#b58300'); // 동전 내부 원 객체
+            const Coin_Kingdommark = new Kingdom_m(1311, 30, 0.6, '#d4a108'); // 왕관 아이콘
+            const Diamond_image = new Diamond(1020, 12); // 다이아몬드 아이콘 객체
+            Meat_image.draw();
+            Coin_outer_image.draw();
+            Coin_inner_image.draw();
+            Coin_Kingdommark.draw();
+            Diamond_image.draw();
+
+            const Propile_name = new Texttext('김주청', 108, 53, 22, '#ffffff', 'Gothic', 'bold');
+            const Propile_levelbar = new Rounded_Rect(120, 65, 200, 18, 8, '#000000', '#000000', 2, 0.5);
+            const Propile_nowlevelbar = new Rounded_Rect(120, 66, 73, 16, 8, '#fff000', '#fff000', 0, 1);
+            const Propile_level = new Texttext('33', 115, 80, 18, '#ffffff', 'Gothic', 'bold');
+            const Propile_Kingdommark = new Kingdom_m(145, 95, 0.6, '#2f3e43'); // 왕관 아이콘
+            Propile_name.Write();
+            Propile_levelbar.draw();
+            Propile_nowlevelbar.draw();
+            Propile_Kingdommark.draw();
+            Propile_level.Write();
+
+            // 텍스트
+            const Propile_meat = new Texttext('777/76', 700, 45, 22, '#ffffff', 'Gothic', 'bold'); // 고기 개수 텍스트
+            const Propile_coin = new Texttext('335,956', 890, 45, 22, '#ffffff', 'Gothic', 'bold'); // 코인 개수 텍스트
+            const Propile_dia = new Texttext('1,040', 1105, 45, 22, '#ffffff', 'Gothic', 'bold'); // 다이아몬드 개수 텍스트
+            Propile_meat.Write();
+            Propile_coin.Write();
+            Propile_dia.Write();
+
+            //상점
+            const Menu_Shop_image = new Shop(17, 128);
+            const Menu_market = new Texttext('상점', 30, 190, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Shop_image.draw();
+            Menu_market.Write();
+
+            //이벤트
+            const Menu_Event_image = new Event_image(12, 200);
+            const Menu_event = new Texttext('이벤트', 23, 270, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Event_image.draw();
+            Menu_event.Write();
+
+            //쿠키 활동
+            const Menu_acting = new Texttext('쿠키 활동', 15, 500, 18, '#ffffff', 'Gothic', 'bold');
+            const Menu_cookie_act_image = new Cookie_act(20, 420);
+            Menu_cookie_act_image.draw();
+            Menu_acting.Write();
+
+            // 편집
+            const Menu_Edit_image = new Edit_image(25, 527);
+            const Menu_edit = new Texttext('편집', 35, 580, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Edit_image.draw();
+            Menu_edit.Write();
+
+            //건설
+            const Menu_Construction = new Construction(20, 600);
+            const Menu_construct = new Texttext('건설하기', 40, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Construction.draw();
+            Menu_construct.Write();
+
+            //소원나무
+            const Menu_Tree_image = new Tree(160, 619);
+            const Menu_tree = new Texttext('소원나무', 160, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Tree_image.draw();
+            Menu_tree.Write();
+
+            //곰젤리 열차
+            const Menu_Train_image = new Train(270, 620);
+            const Menu_train = new Texttext('곰젤리 열차', 250, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Train_image.draw();
+            Menu_train.Write();
+
+            //곰젤리 열기구
+            const Menu_balloon_image = new Balloon(377, 618);
+            const Menu_balloon = new Texttext('곰젤리 열기구', 355, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_balloon_image.draw();
+            Menu_balloon.Write();
+
+            //뽑기
+            const Menu_gotcha_image = new Gotcha(880, 625);
+            const Menu_gotcha = new Texttext('뽑기', 900, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_gotcha_image.draw();
+            Menu_gotcha.Write();
+
+            //창고
+            const Menu_garage_image = new Garage(978, 625);
+            const Menu_garage = new Texttext('창고', 995, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_garage_image.draw();
+            Menu_garage.Write();
+
+            //내 쿠키
+            const Menu_mycookie_image = new Mycookie(1111, 652);
+            const Menu_cookie = new Texttext('내 쿠키', 1085, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_mycookie_image.draw();
+            Menu_cookie.Write();
+
+            //PLAY 버튼 텍스트와 킹덤패스 텍스트
+            const Menu_play = new Texttext('PLAY!', 1280, 670, 48, '#ffffff', 'Gothic', 'bold');
+            const Menu_pass = new Texttext('킹덤패스', 1355, 203, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_play.Write();
+            Menu_pass.Write();
+
+            //친구창
+            const Menu_friends_image = new Friends(1198, 17);
+            Menu_friends_image.draw();
+            //메일
+            const Menu_Mail_image = new Mail(1265, 17);
+            Menu_Mail_image.draw();
+            //확성기
+            const Menu_Megaphone_image = new Megaphone(1330, 17);
+            Menu_Megaphone_image.draw();
+            //메뉴
+            const Menu_Menu_image = new Menu(1392, 16);
+            Menu_Menu_image.draw();
+
+            //프로필 아이콘
+            const Propile_photo_image = new Image_put(200, 200, '', 200, 200);
+            Propile_photo_image.draw();
+            //퀘스트 1 아이콘
+            const Q1_axe_image = new AXE(1373, 358);
+            Q1_axe_image.draw();
+            //퀘스트 2 아이콘
+            const Q2_home_image = new Home(1373, 248);
+            Q2_home_image.draw();
+            //퀘스트 3 아이콘
+            const Q3_map_image = new Mapp(1373, 458);
+            Q3_map_image.draw();
+
+            //플레이 아이콘
+            const Menu_play_image = new Sword_play(1190, 620);
+            Menu_play_image.draw();
+
+            const Alarm1 = new Alarm_icon(60, 120, '!');
+            const Alarm2 = new Alarm_icon(420, 610, '!');
+            const Alarm3 = new Alarm_icon(1300, 10, '1');
+            const Alarm4 = new Alarm_icon(60, 200, '1');
+            const Alarm5 = new Alarm_icon(930, 610, 'v');
+            Alarm1.draw();
+            Alarm2.draw();
+            Alarm3.draw();
+            Alarm4.draw();
+            Alarm5.draw();
+
+            const Script_1_1 = new Texttext('이곳 하늘색 영역을 클릭하면', 420, 103, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_1_2 = new Texttext('페이지 2로 이동합니다.', 443, 143, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_1_3 = new Texttext('버튼을 누르면', 1053, 553, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_1_4 = new Texttext('페이지 3으로 이동합니다.', 1053, 593, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_1_5 = new Texttext('↓', 1313, 553, 128, '#000000', 'Gothic', 'bold'); // 설명 스크립트
+            const Script_1_6 = new Texttext('움직이는 캐릭터를 클릭하면', 453, 453, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_1_7 = new Texttext('캐릭터가 멈추고 말을 합니다.', 453, 493, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            Script_1_1.Write();
+            Script_1_2.Write();
+            Script_1_3.Write();
+            Script_1_4.Write();
+            Script_1_5.Write();
+            Script_1_6.Write();
+            Script_1_7.Write();
+        };
+
+        let count = 0;
+        let xpos = 1150;
+        let ypos = 450;
+        let sw = 1;
+        let sww = 0;
+        let page = 1;
+
+        function draw_1() {
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height); // 전체 지우기
+            Screen1();
+            context.beginPath(); //새로 그리기
+            var B_image = new Image();
+            B_image.src = "files/Guild.png";
+            context.drawImage(B_image, 100, 100, 85, 85);
+
+            const wc=new WhiteCookie("files/Chara.PNG",xpos,ypos,100,100);
+            wc.draw(context);
+
+            canvas.addEventListener("mouseup", clicked, {
+                once: true
+            });
+
+            function clicked(e) {
+                e.preventDefault();
+                var x = e.clientX;
+                var y = e.clientY;
+
+                if (page==1 && sww == 0 && x >= xpos && x <= xpos + 100 && y >= ypos && y <= ypos +
+                    100) { //780 = 580+(200) <- image width
+                    x = 9999;
+                    y = 9999;
+                    sww = 1;
+                }
+                if(page==1 && x>=300 && x<=750 && x>=40 && y<=220){
+                    sww=0;
+                    page=2;
+                }
+                if (page==1 && x >= 1175 && x <= 1440 && y >= 605 && y <= 705) {
+                    sww = 0;
+                    page = 3;
+                }
+                e.preventDefault();
+                element.removeEventListener("mouseup", clicked);
+            }
+            if (sww == 1) {
+                count++;
+                if (count == 100) {
+                    count = 0;
+                    sww = 0;
+                }
+
+                ctx.fillStyle = '#ffffff'; // 평면 색상
+                ctx.lineWidth = 2; // 선 굵기
+                ctx.globalAlpha = 0.8;
+                ctx.beginPath();
+                ctx.strokeStyle = '#2e000a'; // 선 색상
+                ctx.lineTo(xpos - 15, ypos - 50);
+                ctx.lineTo(xpos - 15, ypos - 10);
+                ctx.lineTo(xpos + 75, ypos - 10);
+                ctx.lineTo(xpos + 80, ypos);
+                ctx.lineTo(xpos + 85, ypos - 10);
+                ctx.lineTo(xpos + 185, ypos - 10);
+                ctx.lineTo(xpos + 185, ypos - 50);
+                ctx.lineTo(xpos - 15, ypos - 50);
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.globalAlpha = 1;
+                ctx.beginPath();
+                ctx.fillStyle = '#000000'; // 평면 색상
+                ctx.font = '9px Gothic bold';
+                ctx.fillText("오늘도 보람찬 하루를 보낼 수 있을 것 같아요...!", xpos - 10, ypos - 27);
+                ctx.fill();
+                ctx.stroke();
+            }
+            if (sww == 0 && sw == 1) {
+                xpos -= 6;
+                ypos += 4;
+                if (xpos == 1000 && ypos == 550) {
+                    sw = 2;
+                }
+            }
+            if (sww == 0 && sw == 2) {
+                xpos -= 2;
+                ypos -= 2;
+                if (xpos == 600 && ypos == 150) {
+                    sw = 3;
+                }
+            }
+            if (sww == 0 && sw == 3) {
+                xpos += 2;
+                ypos += 2;
+                if (xpos == 1000 && ypos == 550) {
+                    sw = 4;
+
+                }
+            }
+            if (sww == 0 && sw == 4) {
+                xpos += 3;
+                ypos -= 2;
+                if (xpos == 1150 && ypos == 450) {
+                    sw = 1;
+                }
+            }
+            if (page == 1) {
+                setTimeout(draw_1, 1000 / 30);
+            } else if (page == 2) {
+                draw_2();
+            } else if (page == 3) {
+                draw_3();
+            }
+        }
+        function Screen2() {
+            // 바다 배경
+            const Screen2_back=new Rect(0,0,cvs.width,cvs.height,'#d1b77c','#365365',2,1);
+            Screen2_back.draw();
+
+            // 나무 배경
+            const Struct2_Tree=new Struct2Tree(0,0);
+            Struct2_Tree.draw();
+
+            // 열기구 탑승장
+            const Struct2_ball=new Struct2Ball(0,0);
+            Struct2_ball.draw();
+            const Script_2_9 = new Texttext('출발한 열기구가 다시 돌아옵니다.', 283, 553, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            Script_2_9.Write();
+            const BallBall=new BallBalloon(0,cntt);
+            BallBall.draw();
+
+            // 곰젤리 열기구 텍스트 + 아이콘
+            const Balloon2_Text = new Texttext('곰젤리 열기구', 8, 50, 36, '#ffffff', 'Gothic', 'bold');
+            const Balloon2_Circle = new Circle(254, 30, 16, 0, 360, 2, '#ffffff', '#888888'); // 동전 바깥 원 객체
+            const Balloon2_A_Text = new Texttext('i', 252, 38, 20, '#ffffff', 'Gothic', 'bold');
+            Balloon2_Text.Write();
+            Balloon2_Circle.draw();
+            Balloon2_A_Text.Write();
+
+            // 대성공 확률
+            const Percent_image=new Percent(0,0);
+            const Percent_Text = new Texttext('대성공 확률',22, 98, 14, '#8d7d70', 'Gothic', 'bold');
+            Percent_image.draw();
+            Percent_Text.Write();
+
+            // 대성공 확률 - 보통
+            const Percent_Text_q_image=new Normal(0,0);
+            const Percent_Text_q = new Texttext('보통', 185, 85, 16, '#000000', 'Gothic', 'bold');
+            Percent_Text_q_image.draw();
+            Percent_Text_q.Write();
+
+            // 우측 상단 X 버튼
+            const Struct2_X = new X(0,0);
+            Struct2_X.draw();
+
+            // 고기 아이콘
+            const Meat_R = new Rounded_Rect(870, 15, 115, 40, 10, '#000000', '#000000', 2, 0.5); // 고기 부분 사각형
+            const Meat_image = new Meat(845, 10);
+            const Propile_meat = new Texttext('463/72', 900, 45, 22, '#ffffff', 'Gothic', 'bold'); // 고기 개수 텍스트
+            Meat_R.draw();
+            Meat_image.draw();
+            Propile_meat.Write();
+            
+            // 코인 아이콘
+            const Coin = new Rounded_Rect(1200, 15, 180, 40, 10, '#000000', '#000000', 2, 0.5); // 코인 부분 사각형
+            const Coin_outer_image = new Circle(1208, 35, 27, 0, 360, 3, '#fece02', '#4e2800'); // 동전 바깥 원 객체
+            const Coin_inner_image = new Circle(1208, 35, 22, 0, 360, 2, '#edaa01', '#b58300'); // 동전 내부 원 객체
+            const Coin_Kingdommark = new Kingdom_m(1951, 30, 0.6, '#d4a108'); // 왕관 아이콘
+            const Propile_coin = new Texttext('140,408', 1270, 45, 22, '#ffffff', 'Gothic', 'bold'); // 코인 개수 텍스트
+            Coin.draw();
+            Coin_outer_image.draw();
+            Coin_inner_image.draw();
+            Coin_Kingdommark.draw();
+            Propile_coin.Write();
+
+            // 다이아몬드 아이콘
+            const Dia = new Rounded_Rect(1015, 15, 150, 40, 10, '#000000', '#000000', 2, 0.5); // 다이아몬드 부분 사각형
+            const Diamond_image = new Diamond(1010, 12); // 다이아몬드 아이콘 객체
+            const Propile_dia = new Texttext('4,932', 1090, 45, 22, '#ffffff', 'Gothic', 'bold'); // 다이아몬드 개수 텍스트
+            Dia.draw();
+            Diamond_image.draw();
+            Propile_dia.Write();
+
+            // 쿠키 선택
+            const Select_Cookie=new Rounded_Rect(250,635,190,60,30,'#0ca7df','#19100b',2,1);
+            const Select_Cookie_Text=new Texttext('쿠키 선택',295,670,22,'#ffffff','Dotum','bold');
+            Select_Cookie.draw();
+            Select_Cookie_Text.Write();
+
+            // 자동 선택
+            const Auto_Select_Cookie=new Rounded_Rect(465,635,190,60,30,'#ffdb34','#19100b',2,1);
+            const Auto_Select_Cookie_Text=new Texttext('자동 선택',510,670,22,'#ffffff','Dotum','bold');
+            Auto_Select_Cookie.draw();
+            Auto_Select_Cookie_Text.Write();
+
+            // 오른쪽 UI - 틀
+            const Struct2=new Rounded_Rect(740,65,560,640,40,'#9a6048','#000000',2,1);
+            const Struct2_chance=new Rounded_Rect(1050,95,80,30,15,'#4c3024','#4c3024',2,1);
+            const Struct2_chance_icon=new Circle(1048,110,16,0,360,2,'#dc9a50','#4c3024');
+            const Struct2_chance_icon_Text=new Texttext('5/5',1080,115,14,'#ffffff','Dotum','bold');
+            const Struct2_time=new Rounded_Rect(1150,95,130,30,15,'#4c3024','#4c3024',2,1);
+            const Struct2_time_icon=new Circle(1159,108,18,0,360,2,'#6686bf','#19305c');
+            const Struct2_time_icon_Text=new Texttext('1시간',1205,115,14,'#ffffff','Dotum','bold');
+            const Struct2_Text1=new Texttext('에피소드 3',770,95,16,'#f4f084','Dotum','bold');
+            const Struct2_Text2=new Texttext('순례자의 길',770,135,26,'#ffffff','Dotum','bold');
+            Struct2.draw();
+            Struct2_Text1.Write();
+            Struct2_Text2.Write();
+            Struct2_chance.draw();
+            Struct2_chance_icon.draw();
+            Struct2_chance_icon_Text.Write();
+            Struct2_time.draw();
+            Struct2_time_icon.draw();
+            Struct2_time_icon_Text.Write();
+
+            // 오른쪽 UI - 보상창
+            const Struct2_Back=new Rounded_Rect(750,155,535,450,15,'#fefbea','#643615',2,1);
+            const Struct2_Reward=new Reward(0,0);
+            Struct2_Back.draw();
+            Struct2_Reward.draw();
+
+            // 탐사지 변경
+            const Struct2_Change=new Rounded_Rect(765,625,190,70,35,'#0ca7df','#19100b',2,1);
+            const Struct2_Change_Text=new Texttext('탐사지 변경',795,670,24,'#ffffff','Dotum','bold');
+            Struct2_Change.draw();
+            Struct2_Change_Text.Write();
+
+            // 탐사지 변경 - new
+            const Struct2_Change_new=new Rounded_Rect(880,620,80,25,12,'#fe0000','#fe0000',2,1);
+            const Struct2_Change_new_Text=new Texttext('NEW',905,638,14,'#ffff00','Dotum','bold');
+            Struct2_Change_new.draw();
+            Struct2_Change_new_Text.Write();
+
+            // 탐사 시작
+            const Struct2_Start=new Rounded_Rect(975,625,300,70,35,'#79cf0c','#19100b',2,1);
+            const Struct2_Start_Text_1=new Texttext('-14',1070,670,24,'#ffffff','Dotum','bold');
+            const Struct2_Start_Text_2=new Texttext('탐사 시작',1140,670,24,'#ffffff','Dotum','bold');
+            const Start_Meat_image = new Meat(1015, 635);
+            Struct2_Start.draw();
+            Struct2_Start_Text_1.Write();
+            Struct2_Start_Text_2.Write();
+            Start_Meat_image.draw();
+
+            const Script_2_1 = new Texttext('우측 상단의 X를 클릭하면', 1065, 233, 18, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_2_2 = new Texttext('페이지 1로 돌아갑니다.', 1065, 263, 20, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_2_3 = new Texttext('↑', 1353, 180, 128, '#000000', 'Gothic', 'bold'); // 설명 스크립트
+            const Script_2_4 = new Texttext('탐사 시작을', 1303, 473, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_2_5 = new Texttext('클릭하면', 1303, 513, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_2_6 = new Texttext('열기구가', 1303, 553, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_2_7 = new Texttext('출발합니다.', 1303, 593, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_2_8 = new Texttext('←', 1313, 699, 128, '#000000', 'Gothic', 'bold'); // 설명 스크립트
+
+            Script_2_1.Write();
+            Script_2_2.Write();
+            Script_2_3.Write();
+            Script_2_4.Write();
+            Script_2_5.Write();
+            Script_2_6.Write();
+            Script_2_7.Write();
+            Script_2_8.Write();
+        }
+        let cntt=0;
+        let swww=0;
+        function draw_2() {
+            var cvs = document.getElementById("canvas");
+            var ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, cvs.width, cvs.height);
+            ctx.fill();
+            Screen2();
+            ctx.fillStyle = '#ffffff'; // 평면 색상
+            ctx.lineWidth = 2; // 선 굵기
+            ctx.globalAlpha = 0.8;
+            ctx.beginPath();
+            ctx.strokeStyle = '#2e000a'; // 선 색상
+            ctx.fill();
+            ctx.stroke();
+
+            canvas.addEventListener("mouseup", clicked, {
+                once: true
+            });
+            function clicked(e) {
+                e.preventDefault();
+                var x = e.clientX;
+                var y = e.clientY;
+
+                if (swww == 0 && x >= 980 && x <= 1270 && y >= 625 && y <= 695) { //780 = 580+(200) <- image width
+                    swww = 1;
+                }
+                if (x >= 1390 && x <= 1440 && y >= 10 && y <= 60) {
+                    swww = 0;
+                    cntt=0;
+                    page = 1;
+                }
+                e.preventDefault();
+                element.removeEventListener("mouseup", clicked);
+            }
+            if (swww == 1) {
+                if (cntt>=-1000) {
+                    cntt-=5;
+                }
+                else{
+                    swww=2;
+                }
+            }
+            if(swww==2){
+                if(cntt<=0){
+                    cntt+=5;
+                }
+                else{
+                    swww=0;
+                }
+            }
+            if (page == 1) {
+                draw_1();
+            } else if (page == 2) {
+                setTimeout(draw_2, 1000/120);
+            } else if (page == 3) {
+                draw_3();
+            }
+        }
+
+        function Screen3() {
+            //지도
+            const Map3_img=new Map3(0,0);
+            Map3_img.draw();
+
+            // 설명
+            const Script_3_1 = new Texttext('지도 아무 곳을 클릭하면', 420, 153, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_3_2 = new Texttext('캐릭터가 클릭한 방향 쪽으로 이동합니다', 323, 203, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_3_3 = new Texttext('버튼을 누르면', 1053, 553, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_3_4 = new Texttext('페이지 1로 돌아갑니다.', 1053, 593, 25, '#000000', 'Gothic', 'italic bold'); // 설명 스크립트
+            const Script_3_5 = new Texttext('↓', 1313, 553, 128, '#000000', 'Gothic', 'bold'); // 설명 스크립트
+            Script_3_1.Write();
+            Script_3_2.Write();
+            Script_3_3.Write();
+            Script_3_4.Write();
+            Script_3_5.Write();
+
+            const Banner = new Rect(100, 125, 210, 60, '#21c0f8', '#000000', 2, 1); // 배너 사각형
+            const Banner_Open1 = new Texttext('길드', 173, 153, 25, '#ffffff', 'Gothic', 'italic bold'); // '길드' 텍스트
+            const Banner_Open2 = new Texttext('그랜드 오픈', 170, 178, 25, '#ffffff', 'Gothic',
+            'italic bold'); // '그랜드 오픈' 텍스트
+            const Banner_image=new Image_put(100,100,"files/Guild.png",85,85); // 이미지
+            Banner.draw();
+            Banner_Open1.Write();
+            Banner_Open2.Write();
+            Banner_image.draw();
+
+            const Land_text = new Rounded_Rect(15, 15, 400, 80, 20, '#000000', '#000000', 2, 0.5); // 프로필 텍스트 부분 사각형
+            const Land_photo = new Rounded_Rect(255, 25, 145, 60, 20, '#74b72c', '#000000', 2, 1); // 프로필 사진 부분 정사각형
+            const Meat_R = new Rounded_Rect(670, 15, 115, 40, 10, '#000000', '#000000', 2, 0.5); // 고기 부분 사각형
+            const Coin = new Rounded_Rect(815, 15, 180, 40, 10, '#000000', '#000000', 2, 0.5); // 코인 부분 사각형
+            const Dia = new Rounded_Rect(1030, 15, 150, 40, 10, '#000000', '#000000', 2, 0.5); // 다이아몬드 부분 사각형
+            const Play_button = new Rounded_Rect(1320, 605, 120, 100, 25, '#2f4c6c', '#000000', 2, 1); // 플레이 버튼 사각형
+            Land_text.draw();
+            Land_photo.draw();
+            Meat_R.draw();
+            Coin.draw();
+            Dia.draw();
+            Play_button.draw();
+
+            const Quest1_outer_image = new Circle(1397, 283, 35, 0, 360, 5, '#bf503c', '#6a2118'); // 퀘스트 아이콘 그리기
+            const Quest1_inner_image = new Circle(1397, 283, 35, 315, 135, 5, '#a63b2b', '#6a2118'); // 퀘스트 아이콘 그리기
+            const Quest2_outer_image = new Circle(1397, 388, 35, 0, 360, 5, '#bf503c', '#6a2118'); // 퀘스트 아이콘 그리기
+            const Quest2_inner_image = new Circle(1397, 388, 35, 315, 135, 5, '#a63b2b', '#6a2118'); // 퀘스트 아이콘 그리기
+            const Quest1_levelbar = new Rounded_Rect(1356, 315, 80, 16, 8, '#000000', '#000000', 2, 0.5);
+            const Quest2_levelbar = new Rounded_Rect(1356, 420, 80, 16, 8, '#000000', '#000000', 2, 0.5);
+            const Quest2_nowlevelbar = new Rounded_Rect(1358, 422, 68, 12, 6, '#fff000', '#fff000', 0, 1);
+
+            //퀘1: 칼 추가
+            //퀘2: 나무집 추가
+            const Quest_1 = new Texttext('0/1', 1386, 328, 15, '#ffffff', 'Gothic', 'bold');
+            const Quest_2 = new Texttext('7/8', 1386, 435, 15, '#ffffff', 'Gothic', 'bold');
+            Quest1_outer_image.draw();
+            Quest1_inner_image.draw();
+            Quest2_outer_image.draw();
+            Quest2_inner_image.draw();
+            Quest1_levelbar.draw();
+            Quest2_levelbar.draw();
+            Quest2_nowlevelbar.draw();
+            Quest_1.Write();
+            Quest_2.Write();
+
+            const Kingdompass = new Kingdom_pass(1330, 140); // 킹덤패스 아이콘 객체
+            Kingdompass.draw();
+
+            const Meat_image = new Meat(650, 10);
+            const Coin_outer_image = new Circle(823, 35, 27, 0, 360, 3, '#fece02', '#4e2800'); // 동전 바깥 원 객체
+            const Coin_inner_image = new Circle(823, 35, 22, 0, 360, 2, '#edaa01', '#b58300'); // 동전 내부 원 객체
+            const Coin_Kingdommark = new Kingdom_m(1311, 30, 0.6, '#d4a108'); // 왕관 아이콘
+            const Diamond_image = new Diamond(1020, 12); // 다이아몬드 아이콘 객체
+            Meat_image.draw();
+            Coin_outer_image.draw();
+            Coin_inner_image.draw();
+            Coin_Kingdommark.draw();
+            Diamond_image.draw();
+
+            const Land_name = new Texttext('작은 거인의 땅', 38, 75, 22, '#ffffff', 'Gothic', 'bold');
+            const Land_epi = new Texttext('에피소드 1', 38, 45, 14, '#fffa7a', 'Gothic', 'bold');
+            const Land_mode = new Texttext('일반', 275, 60, 20, '#feffb1', 'Gothic', 'bold');
+            const Land_pol=new LP(0,0);
+            Land_name.Write();
+            Land_epi.Write();
+            Land_mode.Write();
+            Land_pol.draw();
+
+            const Propile_meat = new Texttext('463/72', 700, 45, 22, '#ffffff', 'Gothic', 'bold'); // 고기 개수 텍스트
+            const Propile_coin = new Texttext('139,896', 890, 45, 22, '#ffffff', 'Gothic', 'bold'); // 코인 개수 텍스트
+            const Propile_dia = new Texttext('4,932', 1105, 45, 22, '#ffffff', 'Gothic', 'bold'); // 다이아몬드 개수 텍스트
+            Propile_meat.Write();
+            Propile_coin.Write();
+            Propile_dia.Write();
+
+            //상점
+            const Menu_Shop_image = new Shop(17, 128);
+            const Menu_market = new Texttext('상점', 30, 190, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Shop_image.draw();
+            Menu_market.Write();
+
+            //이벤트
+            const Menu_Event_image = new Event_image(12, 200);
+            const Menu_event = new Texttext('이벤트', 23, 270, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Event_image.draw();
+            Menu_event.Write();
+
+            //월드맵
+            const Menu_Construction = new Construction_Map(20, 600);
+            const Menu_construct = new Texttext('월드맵', 50, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_Construction.draw();
+            Menu_construct.Write();
+
+            //현상수배
+            const plpl=new PPL(0,0);
+            const Menu_tree = new Texttext('현상수배', 160, 693, 18, '#ffffff', 'Gothic', 'bold');
+            plpl.draw();
+            Menu_tree.Write();
+
+            //100%
+            const hundred = new Hund(0,0);
+            hundred.draw();
+
+            //킹덤 아레나
+            const kingdom_a=new KA(0,0);
+            const Menu_train = new Texttext('킹덤 아레나', 250, 693, 18, '#ffffff', 'Gothic', 'bold');
+            kingdom_a.draw();
+            Menu_train.Write();
+
+            //길드
+            const Menu_gl_image=new Gl(0,0);
+            const Menu_gl = new Texttext('길드', 390, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_gl_image.draw();
+            Menu_gl.Write();
+
+            //뽑기
+            const Menu_gotcha_image = new Gotcha(1027, 625);
+            const Menu_gotcha = new Texttext('뽑기', 1040, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_gotcha_image.draw();
+            Menu_gotcha.Write();
+
+            //창고
+            const Menu_garage_image = new Garage(1125, 625);
+            const Menu_garage = new Texttext('창고', 1140, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_garage_image.draw();
+            Menu_garage.Write();
+
+            //내 쿠키
+            const Menu_mycookie_image = new Mycookie(1258, 652);
+            const Menu_cookie = new Texttext('내 쿠키', 1230, 693, 18, '#ffffff', 'Gothic', 'bold');
+            Menu_mycookie_image.draw();
+            Menu_cookie.Write();
+
+            const Menu_play = new Texttext('왕국가기', 1345, 695, 18, '#ffffff', 'Gothic', 'bold');
+            const constcastle=new Conca(0,0);
+            const Menu_pass = new Texttext('킹덤패스', 1355, 203, 18, '#ffffff', 'Gothic', 'bold');
+            constcastle.draw();
+            Menu_play.Write();
+            Menu_pass.Write();
+
+            const Alarm1 = new Alarm_icon(60, 120, '!');
+            const Alarm2 = new Alarm_icon(215, 610, '!');
+            const Alarm3 = new Alarm_icon(100, 595, '1');
+            Alarm1.draw();
+            Alarm2.draw();
+            Alarm3.draw();
+
+            //친구창
+            const Menu_friends_image = new Friends(1198, 17);
+            Menu_friends_image.draw();
+            //메일
+            const Menu_Mail_image = new Mail(1265, 17);
+            Menu_Mail_image.draw();
+            //확성기
+            const Menu_Megaphone_image = new Megaphone(1330, 17);
+            Menu_Megaphone_image.draw();
+            //메뉴
+            const Menu_Menu_image = new Menu(1392, 16);
+            Menu_Menu_image.draw();
+
+            //퀘스트 1 아이콘
+            const Q1_sword_image = new Sword(1373, 258);
+            Q1_sword_image.draw();
+            //퀘스트 2 아이콘
+            const Q2_home_image = new Home(1373, 350);
+            Q2_home_image.draw();
+
+            Menu_tree.Write();
+            //왕국가기 아이콘
+        }
+
+        let posx=500;
+        let posy=500;
+        let swsw=0;
+        function draw_3() {
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            Screen3();
+            var B_image = new Image();
+            B_image.src = "files/Guild.png";
+            context.drawImage(B_image, 100, 100, 85, 85);
+
+            const Banner_image=new Image_put(99,101,"files/Guild.png",85,85); // 이미지
+            Banner_image.draw();
+
+            const wc=new WhiteCookie("files/Chara.PNG",posx,posy,85,85);
+            wc.draw(context);
+            canvas.addEventListener("mouseup", clicked, {
+                once: true
+            });
+            function clicked(e) {
+                e.preventDefault();
+                var x = e.clientX;
+                var y = e.clientY;
+                if(x>=1320 && x<=1440 && y>=605 && y<=705){
+                    page=1;
+                }
+                if(swsw==0){
+                    if(posx<x-40){
+                        posx+=5;
+                        if(posx>=x-40){
+                            posx=x-40;
+                            swsw=1;
+                        }
+                    }
+                    else if(posx>x-40){
+                        posx-=5;
+                        if(posy<=x-40){
+                            posx=x-40;
+                            swsw=1;
+                        }
+                    }
+                }
+                if(swsw==1){
+                    if(posy<y-40){
+                        posy+=5;
+                        if(posy>=y-40){
+                            posy=y-40;
+                            swsw=0;
+                        }
+                    }
+                    else if(posy>y-40){
+                        posy-=5;
+                        if(posy<=y-40){
+                            posy=y-40;
+                            swsw=0;
+                        }
+                    }
+                }
+                var image = new Image();
+                image.src = "files/Chara.PNG";
+                context.drawImage(image, posx, posy, 85, 85);
+                
+                e.preventDefault();
+                element.removeEventListener("mouseup", clicked);
+            }
+            if (page == 1) {
+                draw_1();
+            } else if (page == 2) {
+                draw_2();
+            } else if (page == 3) {
+                setTimeout(draw_3, 1000/30);
+            }
+        }
+        if (page == 1) {
+            draw_1();
+        } else if (page == 2) {
+            draw_2();
+        } else if (page == 3) {
+            draw_3();
+        }
+        // 자바스크립트 코드 내용...
+    </script>
+</body>
+
+</html>
